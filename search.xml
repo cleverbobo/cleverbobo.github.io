@@ -2,16 +2,67 @@
 <search>
   <entry>
     <title>markdown基本语法一</title>
-    <url>/2020/08/26/hello-world/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要面向初步接触markdown的小白，主要是面向windows用户，简单介绍markdown语法规则，同时方便自己在忘记时能快速查看~</p>
+    <url>/2020/08/26/markdown1/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要面向初步接触markdown的小白，主要是面向windows用户，简单介绍markdown语法规则，同时方便自己在忘记时能快速查看~<br>本文参考文献：<br><a href="https://hyxxsfwy.github.io/2016/01/15/Hexo-Markdown-%E7%AE%80%E6%98%8E%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C">一、简明语法手册</a><br><a href="https://www.mereith.com/2018/12/08/markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/">二、某知名哲学家的blog</a><br><a href="https://www.jianshu.com/p/191d1e21f7ed/">三、Markdown基本语法</a><br><a href="https://www.jianshu.com/p/599857933f6e">四、Markdown基本语法总结</a></p>
 <h2 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h2><p>第一种：打开powershell（管理员），打开到对应位置的目录，输入以下代码</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;新文章的名字&quot;</span></span><br></pre></td></tr></table></figure>
-<p>第二种：打开blog文章所在的位置，例如“D:\Program Files\hexo-blog\myblog\source_posts”,创建txt文件，更改拓展名为.md</p>
+<p>第二种：打开blog文章所在的位置，例如<code>D:\Program Files\hexo-blog\myblog\source\_posts</code>,创建txt文件，更改拓展名为.md</p>
 <p>两种方法没有什么本质区别，效率也是一样的，大家可以根据自己的习惯选择,个人推荐选择第一种~</p>
 <h2 id="创建blog文件的文件头部分"><a href="#创建blog文件的文件头部分" class="headerlink" title="创建blog文件的文件头部分"></a>创建blog文件的文件头部分</h2><p>每一篇blog一般都要包含4个部分，以本篇为例：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:00:00</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br></pre></td></tr></table></figure>
 <p>分别对应本篇文章的标题，编辑时间，标签以及文章分类。另外，标签可以有多个，用英文逗号隔开；分类建议只有一个。</p>
-<h2 id="编写文章的标题"><a href="#编写文章的标题" class="headerlink" title="编写文章的标题"></a>编写文章的标题</h2>]]></content>
+<h2 id="编写文章的标题"><a href="#编写文章的标题" class="headerlink" title="编写文章的标题"></a>编写文章的标题</h2><p>markdown支持6级标题，以<code>#</code>作为关键字，识别标题，实例如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 一级标题</span></span><br><span class="line"><span class="comment">## 二级标题</span></span><br><span class="line"><span class="comment">### 三级标题</span></span><br><span class="line"><span class="comment">#### 四级标题</span></span><br><span class="line"><span class="comment">##### 五级标题</span></span><br><span class="line"><span class="comment">###### 六级标题</span></span><br></pre></td></tr></table></figure>
+<p>效果如下：<br><img src="https://pic.mereith.com/img/show_title.png-slim"></p>
+<p>此外还有一些特殊的标题符号，例如在标题前加入<code>- </code>, <code>* </code>,<code>+ </code>，可着重标记该项，效果如下：</p>
+<ul>
+<li>着重强调符号</li>
+</ul>
+<h2 id="字体设置"><a href="#字体设置" class="headerlink" title="字体设置"></a>字体设置</h2><h3 id="粗体和斜体"><a href="#粗体和斜体" class="headerlink" title="粗体和斜体"></a>粗体和斜体</h3><p>使用<code>*</code>和<code>**</code>分别表示斜体和粗体，格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">*斜体*，**粗体**，***斜体加粗***</span><br></pre></td></tr></table></figure>
+<p>效果展示：<em>斜体</em>,<strong>粗体</strong>,<strong><em>斜体加粗</em></strong></p>
+<h2 id="字体、字号、颜色"><a href="#字体、字号、颜色" class="headerlink" title="字体、字号、颜色"></a>字体、字号、颜色</h2><p>使用关键字，可以指定字体的颜色和大小，其格式为：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">指定字体类型： &lt;font face=<span class="string">&quot;黑体&quot;</span>&gt;我是黑体字&lt;/font&gt;</span><br><span class="line">指定字体大小： &lt;font size=12&gt;我是12号字&lt;/font&gt;</span><br><span class="line">指定字体颜色：&lt;font color=<span class="comment">#0099ff&gt;我是蓝色字&lt;/font&gt; #0099ff 为颜色的16进制代码</span></span><br><span class="line">指定字体颜色、字号、字体类型&lt;font color=<span class="comment">#0099ff size=12 face=&quot;黑体&quot;&gt;黑体&lt;/font&gt;</span></span><br></pre></td></tr></table></figure>
+<p>效果如下：<br>指定字体类型： <font face="黑体">我是黑体字</font><br>指定字体大小： <font size="12">我是12号字</font><br>指定字体颜色：<font color="#0099ff">我是蓝色字</font> #0099ff 为颜色的16进制代码<br>指定字体颜色、字号、字体类型<font color="#0099ff" size="12" face="黑体">黑体</font></p>
+<h3 id="换行"><a href="#换行" class="headerlink" title="换行"></a>换行</h3><p>方法1：连敲2个以上空格+enter键；<br>方法2：利用html语法，<br>。</p>
+<h3 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h3><p>单独一行使用<code>***</code>或者<code>---</code>，表示该行作为分割线</p>
+<hr>
+<h3 id="删除线"><a href="#删除线" class="headerlink" title="删除线"></a>删除线</h3><p>删除线是指在原文本上画一条线，类似在纸上写错了划线来删除，一般用于表示过时的版本或者错误的写法较为醒目，格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">~~删除线~~</span><br></pre></td></tr></table></figure>
+<p>效果：<del>删除线</del></p>
+<h3 id="超链接"><a href="#超链接" class="headerlink" title="超链接"></a>超链接</h3><p>在编写blog的时候，往往会参考一些网站，我们需要把网站链接放在正文中，此时就需要用到超链接；此外还可以放一些图片链接<br>网站链接格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[链接说明](链接地址)</span><br></pre></td></tr></table></figure>
+<p>例如：<a href="https://www.mereith.com/">某知名哲学家♂的个人主页</a></p>
+<p>图片超链接格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">![图片说明](图片地址)</span><br></pre></td></tr></table></figure>
+<p>例如：<img src="https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=543966357,2530364137&fm=26&gp=0.jpg" alt="某知名老婆的图片" title="蕾姆"></p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><p>可以用<code>\</code>来表示注释，也就是说<code>\</code>后的文字不会被转义，格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">\<span class="comment">#标题格式，但不是标题</span></span><br></pre></td></tr></table></figure>
+<p>具体效果如下：#标题格式，但不是标题</p>
+<h3 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h3><p>使用<code>&gt;</code>来表示文字的引用，往往在引用参考文献中的语句时使用，其格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; Sow nothing, reap nothing</span><br></pre></td></tr></table></figure>
+<p>此外，引用还可以嵌套使用，例如:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&gt; 这是第一个引用</span><br><span class="line">&gt;&gt; 这是第一个引用中的引用</span><br><span class="line">&gt;&gt;&gt; 这是第一个引用中的引用的引用</span><br></pre></td></tr></table></figure>
+<p>效果展示如下：</p>
+<blockquote>
+<p>这是第一个引用</p>
+<blockquote>
+<p>这是第一个引用中的引用</p>
+<blockquote>
+<p>这是第一个引用中的引用的引用<br>我就不套娃了，大家自己可以试试~</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><p><strong>首先</strong>，是行内代码块，使用一对 ` 来括住文字，格式如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">行内`代码`块</span><br></pre></td></tr></table></figure>
+<p>其效果如下：行内<code>代码</code>块</p>
+<p><strong>其次</strong>，多行代码块，使用一对```来括住文字，效果如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">第一行</span><br><span class="line">第二行</span><br><span class="line">第三行</span><br><span class="line">......</span><br></pre></td></tr></table></figure>
+
+<p><strong>最后</strong>，支持规定语言的代码展示，以python为例，在 ``` 后加入编码格式即可</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">    print(<span class="string">&quot;hello world&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="引用本地图片"><a href="#引用本地图片" class="headerlink" title="引用本地图片"></a>引用本地图片</h2><p>在hexo中，如果你想引用本地图片，最好先安装hexo-asset-image的插件，保证图片不会因为移动而丢失。安装完该插件之后，每次产生新的.md文件的同时，还会在生成与之同名的文件夹。将想要上传的图片传入该文件夹，按照<code>![你想输入的替代文字](xxxx/图片名.jpg)</code>引用即可，效果如下：<br><img src="/2020/08/26/markdown1/test1.jpg" alt="测试图片"></p>
+]]></content>
       <categories>
         <category>markdown</category>
       </categories>
