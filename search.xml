@@ -9,8 +9,9 @@
 <p>第二种：打开blog文章所在的位置，例如<code>D:\Program Files\hexo-blog\myblog\source\_posts</code>,创建txt文件，更改拓展名为.md</p>
 <p>两种方法没有什么本质区别，效率也是一样的，大家可以根据自己的习惯选择,个人推荐选择第一种~</p>
 <h2 id="创建blog文件的文件头部分"><a href="#创建blog文件的文件头部分" class="headerlink" title="创建blog文件的文件头部分"></a>创建blog文件的文件头部分</h2><p>每一篇blog一般都要包含4个部分，以本篇为例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:00:00</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br></pre></td></tr></table></figure>
-<p>分别对应本篇文章的标题，编辑时间，标签以及文章分类。另外，标签可以有多个，用英文逗号隔开；分类建议只有一个。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:00:00</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br><span class="line">description: 本篇blog主要面向初步接触markdown的小白，主要是面向windows用户，简单介绍markdown语法规则，同时方便自己在忘记时能快速查看~</span><br></pre></td></tr></table></figure>
+<p>分别对应本篇文章的标题，编辑时间，标签以及文章分类。另外，标签可以有多个，用英文逗号隔开；分类建议只有一个；简介只在首页列表显示，打开后不会显示，是可选项。</p>
+<a id="more"></a>
 <h2 id="编写文章的标题"><a href="#编写文章的标题" class="headerlink" title="编写文章的标题"></a>编写文章的标题</h2><p>markdown支持6级标题，以<code>#</code>作为关键字，识别标题，实例如下：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 一级标题</span></span><br><span class="line"><span class="comment">## 二级标题</span></span><br><span class="line"><span class="comment">### 三级标题</span></span><br><span class="line"><span class="comment">#### 四级标题</span></span><br><span class="line"><span class="comment">##### 五级标题</span></span><br><span class="line"><span class="comment">###### 六级标题</span></span><br></pre></td></tr></table></figure>
 <p>效果如下：<br><img src="https://pic.mereith.com/img/show_title.png-slim"></p>
