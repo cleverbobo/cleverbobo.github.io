@@ -1,21 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>markdown基本语法</title>
+    <title>markdown基本语法一</title>
     <url>/2020/08/26/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要面向初步接触markdown的小白，主要是面向windows用户，简单介绍markdown语法规则，同时方便自己在忘记时能快速查看~</p>
+<h2 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h2><p>第一种：打开powershell（管理员），打开到对应位置的目录，输入以下代码</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;新文章的名字&quot;</span></span><br></pre></td></tr></table></figure>
+<p>第二种：打开blog文章所在的位置，例如“D:\Program Files\hexo-blog\myblog\source_posts”,创建txt文件，更改拓展名为.md</p>
+<p>两种方法没有什么本质区别，效率也是一样的，大家可以根据自己的习惯选择,个人推荐选择第一种~</p>
+<h2 id="创建blog文件的文件头部分"><a href="#创建blog文件的文件头部分" class="headerlink" title="创建blog文件的文件头部分"></a>创建blog文件的文件头部分</h2><p>每一篇blog一般都要包含4个部分，以本篇为例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:54:11</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br></pre></td></tr></table></figure>
+<p>分别对应本篇文章的标题，编辑时间，标签以及文章分类。另外，标签可以有多个，用英文逗号隔开；分类建议只有一个。</p>
 ]]></content>
       <categories>
         <category>markdown</category>
