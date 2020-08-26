@@ -9,7 +9,7 @@
 <p>第二种：打开blog文章所在的位置，例如“D:\Program Files\hexo-blog\myblog\source_posts”,创建txt文件，更改拓展名为.md</p>
 <p>两种方法没有什么本质区别，效率也是一样的，大家可以根据自己的习惯选择,个人推荐选择第一种~</p>
 <h2 id="创建blog文件的文件头部分"><a href="#创建blog文件的文件头部分" class="headerlink" title="创建blog文件的文件头部分"></a>创建blog文件的文件头部分</h2><p>每一篇blog一般都要包含4个部分，以本篇为例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:54:11</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:00:00</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br></pre></td></tr></table></figure>
 <p>分别对应本篇文章的标题，编辑时间，标签以及文章分类。另外，标签可以有多个，用英文逗号隔开；分类建议只有一个。</p>
 <h2 id="编写文章的标题"><a href="#编写文章的标题" class="headerlink" title="编写文章的标题"></a>编写文章的标题</h2>]]></content>
       <categories>
