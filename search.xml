@@ -11,7 +11,7 @@
 <h2 id="创建blog文件的文件头部分"><a href="#创建blog文件的文件头部分" class="headerlink" title="创建blog文件的文件头部分"></a>创建blog文件的文件头部分</h2><p>每一篇blog一般都要包含4个部分，以本篇为例：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:54:11</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br></pre></td></tr></table></figure>
 <p>分别对应本篇文章的标题，编辑时间，标签以及文章分类。另外，标签可以有多个，用英文逗号隔开；分类建议只有一个。</p>
-]]></content>
+<h2 id="编写文章的标题"><a href="#编写文章的标题" class="headerlink" title="编写文章的标题"></a>编写文章的标题</h2>]]></content>
       <categories>
         <category>markdown</category>
       </categories>
