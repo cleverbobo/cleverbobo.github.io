@@ -79,4 +79,25 @@
         <tag>markdown</tag>
       </tags>
   </entry>
+  <entry>
+    <title>markdown进阶心得（更新中）</title>
+    <url>/2020/08/27/markdown2/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要是在编辑markdown时，遇到了很多问题，同时也找到了很多技巧，所以在这里mark一下</p>
+<h2 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h2><p>英文字符空格 <code>&amp;ensp</code><br>中文字符空格 <code>&amp;emsp</code><br>不断行的空白格 <code>&amp;nbsp</code><br>其中较为常用的是<code>&amp;emsp</code>,其效果如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&amp;emsp&amp;emsp首行缩进两字符</span><br></pre></td></tr></table></figure><br><a id="more"></a></p>
+<h2 id="文字居中"><a href="#文字居中" class="headerlink" title="文字居中"></a>文字居中</h2><p>文字居中使用<code>&lt;center&gt; ``&lt;/center&gt;</code>来括住文字，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;center&gt; 文字居中&lt;&#x2F;center&gt; </span><br></pre></td></tr></table></figure><br>效果展示：</p>
+<center> 文字居中</center> 
+
+<h2 id="插入公式"><a href="#插入公式" class="headerlink" title="插入公式"></a>插入公式</h2><p>参考链接：(<a href="https://www.jianshu.com/p/7ab21c7f0674">https://www.jianshu.com/p/7ab21c7f0674</a>)<br>按照参考链接里面的教程，将冲突的配置文件更改，即可在exo中渲染MathJax数学公式<br><br>但是该公式有严格的LaTeX语法，语法规则参考<a href="https://www.jianshu.com/p/25f0139637b7">《markdown中公式编辑教程》</a>,所以较为复杂，在这里推荐一种懒人方法：使用“mathpix”插件，官方的下载地址为(<a href="https://mathpix.com/)。">https://mathpix.com/)。</a><br>使用方法浅显易懂，注册账号登录，截屏选取公式，复制结果。如果是编辑公式，我们可以在word上编写或者写在纸上，用该软件转换格式，实测非常好用~</p>
+<h2 id="writage插件"><a href="#writage插件" class="headerlink" title="writage插件"></a>writage插件</h2><p>官方地址：(<a href="https://www.writage.com">https://www.writage.com</a>)<br>使用教程：(<a href="https://www.cnblogs.com/craigtaylor/p/13540170.html">https://www.cnblogs.com/craigtaylor/p/13540170.html</a>)<br>该插件可以将word文件转换为.md文件，但是经过我的实测，并不是很理想，待开发中~</p>
+<center> <font size="12" color="#DC143C" face="黑体">未完待续~</font> </center>
+
+]]></content>
+      <categories>
+        <category>markdown</category>
+      </categories>
+      <tags>
+        <tag>markdown</tag>
+        <tag>进阶</tag>
+      </tags>
+  </entry>
 </search>
