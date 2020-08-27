@@ -20,31 +20,41 @@
     var CONFIG = {"hostname":"cleverbobo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"ture","show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Sow nothing, reap nothing">
-<meta property="og:type" content="website">
-<meta property="og:title" content="米奇妙妙屋">
-<meta property="og:url" content="http://cleverbobo.github.io/index.html">
+  <meta name="description" content="引言&amp;emsp;&amp;emsp;所谓机器学习，听起来很高深莫测，实际上并不复杂，简单来说就是数据驱动的算法。而数据驱动就是指在给定的数据情况下，我们需要找到一种合适的算法对这些数据进行操作，从而实现我们预期的目标，具体我们需要做的任务就是找到合适的模型来描述输入到输出之间的映射关系，然后在使用优化的方法不断对模型中的参数进行优化，使得最后得到的结果鲁棒性最高。在上述的描述中，主要涉及两个方面：1.合适">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度理解逻辑回归">
+<meta property="og:url" content="http://cleverbobo.github.io/2020/08/27/log-regression/index.html">
 <meta property="og:site_name" content="米奇妙妙屋">
-<meta property="og:description" content="Sow nothing, reap nothing">
+<meta property="og:description" content="引言&amp;emsp;&amp;emsp;所谓机器学习，听起来很高深莫测，实际上并不复杂，简单来说就是数据驱动的算法。而数据驱动就是指在给定的数据情况下，我们需要找到一种合适的算法对这些数据进行操作，从而实现我们预期的目标，具体我们需要做的任务就是找到合适的模型来描述输入到输出之间的映射关系，然后在使用优化的方法不断对模型中的参数进行优化，使得最后得到的结果鲁棒性最高。在上述的描述中，主要涉及两个方面：1.合适">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/log-regression/1.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/log-regression/2.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/log-regression/3.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/log-regression/4.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/log-regression/5.png">
+<meta property="article:published_time" content="2020-08-27T02:19:45.000Z">
+<meta property="article:modified_time" content="2020-08-27T11:59:49.602Z">
 <meta property="article:author" content="clever_bobo">
-<meta property="article:tag" content="机器学习（machine learning）">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="入门">
+<meta property="article:tag" content="课程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cleverbobo.github.io/2020/08/27/log-regression/1.png">
 
-<link rel="canonical" href="http://cleverbobo.github.io/">
+<link rel="canonical" href="http://cleverbobo.github.io/2020/08/27/log-regression/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>米奇妙妙屋</title>
+  <title>深度理解逻辑回归 | 米奇妙妙屋</title>
   
 
 
@@ -188,9 +198,10 @@
         <div class="content-wrap">
           
 
-          <div class="content index posts-expand">
+          <div class="content post posts-expand">
             
-      
+
+    
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -206,10 +217,9 @@
       <meta itemprop="name" content="米奇妙妙屋">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/27/log-regression/" class="post-title-link" itemprop="url">深度理解逻辑回归</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          深度理解逻辑回归
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -263,141 +273,100 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>&emsp;&emsp;所谓机器学习，听起来很高深莫测，实际上并不复杂，简单来说就是数据驱动的算法。而数据驱动就是指在给定的数据情况下，我们需要找到一种合适的算法对这些数据进行操作，从而实现我们预期的目标，具体我们需要做的任务就是找到合适的模型来描述输入到输出之间的映射关系，然后在使用优化的方法不断对模型中的参数进行优化，使得最后得到的结果鲁棒性最高。在上述的描述中，主要涉及两个方面：1.合适的模型 2.合适的优化算法。其实，我们在初中就接触过相关的领域，比如给定一系列坐标点（x，y），利用线性回归公式（最小二乘法）拟合曲线y=ax+b。其中，y=ax+b就是我们选择的模型，而最小二乘法就是对其参数a，b的优化算法。当然，这只是最简单的应用，实际机器学习的算法往往要比这个复杂很多，但究其本质还是一样的。<br>&emsp;&emsp;对于机器学习而言，其功能非常强大，能完成分类、回归、转录、机器翻译、异常与检测、合成和采样等等。其中，分类与回归是机器学习的最基本的两项功能。上述举的例子就是回归算法。而今天，我主要介绍一种常用的分类算法——逻辑回归。对于分类的而言，逻辑回归是一种重要的学习方式，该方法所假设的函数在经过优化后的到模型适用性非常高。另外，之所以该方法在名称中带有回归二字，是因为其算法原理与线性回归之间有很深的联系，在下面介绍算法原理的时候我会重点讲解。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/27/log-regression/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
+        <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>&emsp;&emsp;所谓机器学习，听起来很高深莫测，实际上并不复杂，简单来说就是数据驱动的算法。而数据驱动就是指在给定的数据情况下，我们需要找到一种合适的算法对这些数据进行操作，从而实现我们预期的目标，具体我们需要做的任务就是找到合适的模型来描述输入到输出之间的映射关系，然后在使用优化的方法不断对模型中的参数进行优化，使得最后得到的结果鲁棒性最高。在上述的描述中，主要涉及两个方面：1.合适的模型 2.合适的优化算法。其实，我们在初中就接触过相关的领域，比如给定一系列坐标点（x，y），利用线性回归公式（最小二乘法）拟合曲线y=ax+b。其中，y=ax+b就是我们选择的模型，而最小二乘法就是对其参数a，b的优化算法。当然，这只是最简单的应用，实际机器学习的算法往往要比这个复杂很多，但究其本质还是一样的。<br>&emsp;&emsp;对于机器学习而言，其功能非常强大，能完成分类、回归、转录、机器翻译、异常与检测、合成和采样等等。其中，分类与回归是机器学习的最基本的两项功能。上述举的例子就是回归算法。而今天，我主要介绍一种常用的分类算法——逻辑回归。对于分类的而言，逻辑回归是一种重要的学习方式，该方法所假设的函数在经过优化后的到模型适用性非常高。另外，之所以该方法在名称中带有回归二字，是因为其算法原理与线性回归之间有很深的联系，在下面介绍算法原理的时候我会重点讲解。</p>
+<a id="more"></a>
+<h2 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h2><p>&emsp;&emsp;分类，顾名思义，就是将输入的数据分为不同的类别，其结果是离散的，比如预测明天的天气是去晴天还是非晴天。在计算机中，我们往往使用不同的数字代表不用的类别，比如1代表晴天，0代表非晴天。<br>&emsp;&emsp;但是，如果算法仅仅只能够告诉我们分类的结果是非常不精准的，我们更期望算法能够告诉我们发生某种情况的概率，比如明天晴天的概率为80%，非晴天的概率为20%，这样的话我们的可操作性就会更强，可以人为的添加参数（优化）对算法进行矫正。仍以晴天为例，如果分类算法较为精准，我们可以用50%为阈值，如果晴天的概率大于50%，就是晴天；如果算法计算晴天概率比实际偏大，那我们可以设置60%为阈值，大于60%为晴天</p>
+<h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p>&emsp;&emsp;在正式讲解逻辑回归的算法之间，首先我们需要了解一下线性回归的基本原理。我们假定输出y由输入x线性决定（这里的x,y都是向量)，其表达式为：</p>
+<script type="math/tex; mode=display">f(x)=\theta^{T} x······（1）</script><p>当输入变量只有一个时，就变成了我们熟悉的y=ax+b，此时，利用最小二乘法，具体的效果大致如下：<br><img src="/2020/08/27/log-regression/1.png" alt="y=ax+b"><br>&emsp;&emsp;当多个变量的时候，就由一维向量到多维，例如二维就会得到一个平面，而非一条直线了，其共同的特点就是模型是连续的，其值域为（-∞，+∞），这是线性回归模型的一个重要的特征。</p>
+<h2 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h2><p>&emsp;&emsp;逻辑回归是一种回归算法，该种算法主要应用于二分类的状况，例如明天北京是否会下雪，一个人五年内是否会得心脏病等等，由线性回归延伸出来的，那么具体是如何出现的呢？下面我来具体说明，仍以晴天为例：</p>
+<ol>
+<li>对于明天天气如何，我们该如何预测呢？首先，对于给定输入，比如温度，云层厚度，时间，风力，这些参数在算法中表现为x1,x2,x3……，我们最容易想到的就是令预测概率p（x）为x的线性函数，这样就和线性回归一致了，其值域为（-∞，+∞），并不符合我们的要求（概率应该在0~1之间），因此我们需要对其进行改进，使其符合我们的要求；</li>
+<li>如果我们需要限制值域，在机器学习中最常用的就是ln函数，因此我们做一个简单的调整，令lnp(x)为x的线性函数，也就是说p（x）=exp(ax+b)，但是该函数无论正负，均只能在一个方向上约束值域，因此还需要改进；</li>
+<li>最后，对lnp作简单的调整，令其在两个方向都被约束，我们用的方法是逻辑转换，令ln(p/1-p)为x的线性函数，那么p（x）的值域就是[0,1]<br>&emsp;&emsp;因此逻辑回归的表达式为（在印刷体中我们往往都采用log代表ln）：<script type="math/tex; mode=display">\log \frac{p(x)}{1-p(x)}=\beta_{0}+x \beta··········（2）</script></li>
+</ol>
+<p>如（2）中所示，p（x）为事情发生的概率，令$\log \frac{p(x)}{1-p(x)}$成为x的线性函数，解得p(x)为：</p>
+<script type="math/tex; mode=display">\mathrm{p}\left(x ; \beta_{0}, \beta\right)=\frac{1}{1+e^{-\left(\beta_{0}+x \beta\right)}}··········（3）</script><p>（3）式相比于（2）式更容易理解条件概率p（x），但（2）式更能凸显逻辑回归与线性回归之间的关系。<br>如图所示：<br><img src="/2020/08/27/log-regression/2.png" alt="逻辑回归"><br>该图为函数逻辑回归曲线的大致形状，基本完成了我们期望的条件：曲线较为平滑，值域位于[0,1]。</p>
+<h2 id="主要特征"><a href="#主要特征" class="headerlink" title="主要特征"></a>主要特征</h2><ol>
+<li>一般取$\beta_{0}+x \quad \beta=0$为分类的边界，那么如果x是一维，那么分类边界就是一个点（类似在数轴上分类）；如果是二维分类边界就是一条直线，以此类推。之所以如此设置，是因为设置β0+ x β= 0为边界后，我们可以认为当算法输出的概率p（x）≥0.5时，分类结果 Y为1,；当p&lt;0.5时，分类结果Y为0。或者说算法输入的$\beta_{0}+x \quad \beta≥0$时，分类结果为1；$\beta_{0}+x \quad \beta&lt;0$时，分类结果为0（目前只考虑二分类的情况，多种分类情况在后面有介绍）。这样我们就可以把前面计算得到的概率转换为分类的结果了，既得到了分类的条件概率，又得到了分类的结果。</li>
+<li>逻辑回归计算得到的条件概率是由数据点到边界之间的距离决定的，为$\frac{\beta_{0}+x \beta}{|\beta|}$。也就是说如果距离边界远，那么为1（或者0）的概率就会越大。另外这个公式也说明了当||β||越大时，在同一数据集下，分类得到的概率会更像极端（0,1）靠近，如下图所示<br><img src="/2020/08/27/log-regression/3.png" alt="逻辑回归"><br>（备注：最后一种是用线性分类的方式进行分类的）</li>
+<li>逻辑回归是跟据线性回归演化而来，提出时间早，科学家们对其研究较为透彻，运用较为熟练。此外，该算法较为简单，且适用性较强，机器学习的算法在准确度够得情况下，尽量选择较为简单的算法，避免出现过拟合</li>
+</ol>
+<h2 id="对于多分类的逻辑回归"><a href="#对于多分类的逻辑回归" class="headerlink" title="对于多分类的逻辑回归"></a>对于多分类的逻辑回归</h2><p>逻辑回归本质上是对二分类的事件进行的分类，但是对于多分类的情况，我们可以通过建立多个分类模型，将多分类差分成多个二分类的情况，在利用逻辑回归进行分类，如图所示：<br><img src="/2020/08/27/log-regression/4.png" alt="逻辑回归"><br>一般而言如果存在n中情况，我们会设置n个分类器，每个分类器对其中一种进行识别，其条件概率的计算公式为：</p>
+<script type="math/tex; mode=display">P(Y=c \mid X=x)=\frac{e^{\beta_{0}^{(c)}+x \beta^{(c)}}}{\sum_{i=1}^{n} e^{\beta_{0}^{(j)}+x \beta^{(i)}}}</script><p>判别方法与之前类似，如果超过0.5就认为是第c类。值得一提是，当只有两种情况时，令$\beta^{0}=\beta_{0}^{(1)}-\beta_{0}^{(0)}$以及$\beta=\beta^{(1)}-\beta^{(0)}$时，多情况的逻辑分类就转换成二分类的情况了。<br><br>下面是我自己的推导过程：<br><img src="/2020/08/27/log-regression/5.png" alt="逻辑回归"></p>
+
     </div>
 
     
     
     
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
+        <div class="reward-container">
+  <div>如果对您有用的话，这里可以打赏哦~</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
       
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://cleverbobo.github.io/2020/08/26/markdown1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="clever_bobo">
-      <meta itemprop="description" content="Sow nothing, reap nothing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="米奇妙妙屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/08/26/markdown1/" class="post-title-link" itemprop="url">markdown基本语法一</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-08-26 21:00:00" itemprop="dateCreated datePublished" datetime="2020-08-26T21:00:00+08:00">2020-08-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-27 19:54:20" itemprop="dateModified" datetime="2020-08-27T19:54:20+08:00">2020-08-27</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/markdown/" itemprop="url" rel="index"><span itemprop="name">markdown</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/08/26/markdown1/" class="post-meta-item leancloud_visitors" data-flag-title="markdown基本语法一" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/08/26/markdown1/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/26/markdown1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="clever_bobo 微信支付">
+        <p>微信支付</p>
+      </div>
       
-          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要面向初步接触markdown的小白，主要是面向windows用户，简单介绍markdown语法规则，同时方便自己在忘记时能快速查看~<br>本文参考文献：<br><a target="_blank" rel="noopener" href="https://hyxxsfwy.github.io/2016/01/15/Hexo-Markdown-%E7%AE%80%E6%98%8E%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C">一、简明语法手册</a><br><a target="_blank" rel="noopener" href="https://www.mereith.com/2018/12/08/markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/">二、某知名哲学家的blog</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/191d1e21f7ed/">三、Markdown基本语法</a><br><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/599857933f6e">四、Markdown基本语法总结</a></p>
-<h2 id="创建新文章"><a href="#创建新文章" class="headerlink" title="创建新文章"></a>创建新文章</h2><p>第一种：打开powershell（管理员），打开到对应位置的目录，输入以下代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">&quot;新文章的名字&quot;</span></span><br></pre></td></tr></table></figure><br>第二种：打开blog文章所在的位置，例如<code>D:\Program Files\hexo-blog\myblog\source\_posts</code>,创建txt文件，更改拓展名为.md</p>
-<p>两种方法没有什么本质区别，效率也是一样的，大家可以根据自己的习惯选择,个人推荐选择第一种~</p>
-<h2 id="创建blog文件的文件头部分"><a href="#创建blog文件的文件头部分" class="headerlink" title="创建blog文件的文件头部分"></a>创建blog文件的文件头部分</h2><p>每一篇blog一般都要包含4个部分，以本篇为例：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: markdown基本语法一</span><br><span class="line">date: 2020-08-26 23:00:00</span><br><span class="line">tags: [markdown,入门] </span><br><span class="line">categories: markdown</span><br><span class="line">description: 本篇blog主要面向初步接触markdown的小白，主要是面向windows用户，简单介绍markdown语法规则，同时方便自己在忘记时能快速查看~</span><br></pre></td></tr></table></figure><br>分别对应本篇文章的标题，编辑时间，标签以及文章分类。另外，标签可以有多个，用英文逗号隔开；分类建议只有一个；简介只在首页列表显示，打开后不会显示，是可选项。<br></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2020/08/26/markdown1/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="clever_bobo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
         
-      
-    </div>
 
-    
-    
-    
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>clever_bobo
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://cleverbobo.github.io/2020/08/27/log-regression/" title="深度理解逻辑回归">http://cleverbobo.github.io/2020/08/27/log-regression/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E5%85%A5%E9%97%A8/" rel="tag"># 入门</a>
+              <a href="/tags/%E8%AF%BE%E7%A8%8B/" rel="tag"># 课程</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/26/markdown1/" rel="prev" title="markdown基本语法一">
+      <i class="fa fa-chevron-left"></i> markdown基本语法一
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
       </footer>
+    
   </article>
   
   
-  
-
-
   
 
 
 
           </div>
           
+    <div class="comments" id="valine-comments"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -444,6 +413,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E7%B1%BB"><span class="nav-number">2.</span> <span class="nav-text">分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="nav-number">3.</span> <span class="nav-text">线性回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92"><span class="nav-number">4.</span> <span class="nav-text">逻辑回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E8%A6%81%E7%89%B9%E5%BE%81"><span class="nav-number">5.</span> <span class="nav-text">主要特征</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E4%BA%8E%E5%A4%9A%E5%88%86%E7%B1%BB%E7%9A%84%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92"><span class="nav-number">6.</span> <span class="nav-text">对于多分类的逻辑回归</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
