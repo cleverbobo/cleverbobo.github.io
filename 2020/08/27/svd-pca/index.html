@@ -20,20 +20,25 @@
     var CONFIG = {"hostname":"cleverbobo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"ture","show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="参考链接：  [https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;29846048] [https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;41120789&#x2F;answer&#x2F;481966094]  引言机器算法的核心就是如何妥善的处理数据，但是当我们接触到一大堆原始杂乱的陌生数据时">
+  <meta name="description" content="参考链接：  [https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;29846048] [https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;41120789&#x2F;answer&#x2F;481966094]  引言&amp;emsp; &amp;emsp;机器算法的核心就是如何妥善的处理数据，但是当我们接触到一大堆原始杂乱的陌生数据时，往往会感到手足无措，因此我们需要对原始数据压缩，从而找到影响结果变化的主要">
 <meta property="og:type" content="article">
-<meta property="og:title" content="奇异值分解与主成分分析">
+<meta property="og:title" content="通俗理解奇异值分解">
 <meta property="og:url" content="http://cleverbobo.github.io/2020/08/27/svd-pca/index.html">
 <meta property="og:site_name" content="米奇妙妙屋">
-<meta property="og:description" content="参考链接：  [https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;29846048] [https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;41120789&#x2F;answer&#x2F;481966094]  引言机器算法的核心就是如何妥善的处理数据，但是当我们接触到一大堆原始杂乱的陌生数据时">
+<meta property="og:description" content="参考链接：  [https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;29846048] [https:&#x2F;&#x2F;www.zhihu.com&#x2F;question&#x2F;41120789&#x2F;answer&#x2F;481966094]  引言&amp;emsp; &amp;emsp;机器算法的核心就是如何妥善的处理数据，但是当我们接触到一大堆原始杂乱的陌生数据时，往往会感到手足无措，因此我们需要对原始数据压缩，从而找到影响结果变化的主要">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/svd-pca/1.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/svd-pca/2.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/svd-pca/3.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/27/svd-pca/4.png">
 <meta property="article:published_time" content="2020-08-27T15:21:17.000Z">
-<meta property="article:modified_time" content="2020-08-27T16:03:22.102Z">
+<meta property="article:modified_time" content="2020-08-28T07:42:11.733Z">
 <meta property="article:author" content="clever_bobo">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="入门">
 <meta property="article:tag" content="课程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cleverbobo.github.io/2020/08/27/svd-pca/1.png">
 
 <link rel="canonical" href="http://cleverbobo.github.io/2020/08/27/svd-pca/">
 
@@ -48,7 +53,7 @@
   };
 </script>
 
-  <title>奇异值分解与主成分分析 | 米奇妙妙屋</title>
+  <title>通俗理解奇异值分解 | 米奇妙妙屋</title>
   
 
 
@@ -212,7 +217,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          奇异值分解与主成分分析
+          通俗理解奇异值分解
         </h1>
 
         <div class="post-meta">
@@ -229,7 +234,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-08-28 00:03:22" itemprop="dateModified" datetime="2020-08-28T00:03:22+08:00">2020-08-28</time>
+                <time title="修改时间：2020-08-28 15:42:11" itemprop="dateModified" datetime="2020-08-28T15:42:11+08:00">2020-08-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -242,7 +247,7 @@
             </span>
 
           
-            <span id="/2020/08/27/svd-pca/" class="post-meta-item leancloud_visitors" data-flag-title="奇异值分解与主成分分析" title="阅读次数">
+            <span id="/2020/08/27/svd-pca/" class="post-meta-item leancloud_visitors" data-flag-title="通俗理解奇异值分解" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -278,7 +283,98 @@
 <li>[<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/29846048">https://zhuanlan.zhihu.com/p/29846048</a>]</li>
 <li>[<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41120789/answer/481966094">https://www.zhihu.com/question/41120789/answer/481966094</a>]</li>
 </ol>
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>机器算法的核心就是如何妥善的处理数据，但是当我们接触到一大堆原始杂乱的陌生数据时</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>&emsp; &emsp;机器算法的核心就是如何妥善的处理数据，但是当我们接触到一大堆原始杂乱的陌生数据时，往往会感到手足无措，因此我们需要对原始数据压缩，从而找到影响结果变化的主要因素与次要因素，奇异值分解就为我们提供了相应的方法，便于我们从茫茫的数据中找到关键因素，当然这种方法不仅仅局限于数据压缩，还有其他强大的功能，在此就不一 一介绍了。</p>
+<a id="more"></a>
+<h2 id="特征值分解"><a href="#特征值分解" class="headerlink" title="特征值分解"></a>特征值分解</h2><p>&emsp; &emsp;在正式接触奇异值分解之前，我们先来回顾在线性代数中学到的特征值分解(对角化)。首先特征值分解具有一定的局限性，只能应用于方阵，并且该方阵还要满足每个特征值对应的特征向量线性无关的最大个数等于该特征值的重数才能够对角化。对于n维可对角化的矩阵A可写成以下形式：</p>
+<script type="math/tex; mode=display">A=V \Lambda V^{-1}</script><p>具体表现形式为：</p>
+<script type="math/tex; mode=display">A=\left[\begin{array}{}
+\mid & \mid & \mid \\
+\mathbf{v}_{1} & \mathbf{v}_{2} & \mathbf{v}_{3} \\
+\mid & \left.\right|& \mid
+\end{array}\right]\left[\begin{array}{}
+\left.\mid \begin{array}{}
+\lambda_{1} & 0 & 0 \\
+0 & \lambda_{2} & 0 \\
+0 & 0 & \lambda_{3}
+\end{array}\right]\left[\left.\begin{array}{}
+\mid & \mid & \mid \\
+\mathbf{v}_{1} & \mathbf{v}_{2} & \mathbf{v}_{3}\\
+\mid & \left.\right|& \mid
+\end{array}\right]^{-1}\right.
+\end{array}\right.</script><p>上式中，v1,v2,v3为矩阵A的特征向量，一般情况下我们会把特征向量标准化，即满足|| V ||=1。然而，这种特征值分解只能应用于部分方阵。然而，在我们实际的数据中，大部分都并非方阵，因此我们需要对这种方法进行拓展，从而提出了奇异值分解，来应对普遍情况。</p>
+<h2 id="奇异值分解"><a href="#奇异值分解" class="headerlink" title="奇异值分解"></a>奇异值分解</h2><p>&emsp; &emsp;$ A A^{T} $与$ A^{T} A $这两个矩阵对于奇异值分解来说是十分重要的两种矩阵，它们具有以下特征：<br><br>&emsp; &emsp;&emsp; &emsp;1.对于任意维度的矩阵A，都存在$ A A^{T} $与$ A^{T} A $；<br><br>&emsp; &emsp;&emsp; &emsp;2.实对称矩阵，特征向量正交；<br>&emsp; &emsp;&emsp; &emsp;3.方阵；<br>&emsp; &emsp;&emsp; &emsp;4.半正定；<br>&emsp; &emsp;&emsp; &emsp;5.两者具有相同的正数特征值，该特征值得算术平方根称之为奇异值<br>&emsp; &emsp;&emsp; &emsp;6.两者的秩相等，且与矩阵A相同。<br>&emsp; &emsp;这样的话，我们令$ u_{i} $为矩阵$ A A^{T} $的特征向量，令$ v_{i} $为矩阵$ A^{T} A $的特征向量,则我们称由$ u_{i} $，$ v_{i} $构成的矩阵$U$，$V$为矩阵A的奇异向量，具体表达式如下：<br><img src="/2020/08/27/svd-pca/1.png" alt><br>也就是说：</p>
+<script type="math/tex; mode=display">\left(A^{T} A\right) v_{i}=\lambda_{i} v_{i}</script><script type="math/tex; mode=display">\left(A A^{T}\right) u_{i}=\lambda_{i} u_{i}</script><p>&emsp; &emsp;根据之前$ A A^{T} $与$ A^{T} A $的性质可知，我们可以通过正交分解使得$U,V$为正交矩阵。有了上述的基础概念，下面引入核心公式，奇异值分解认为，任意维度的矩阵A都可以被分解为以下形式：</p>
+<script type="math/tex; mode=display">A=U S V^{T}</script><p>其中，$U,V$就是矩阵A的奇异向量；S是对角阵，由奇异值构成。矩阵的排列顺序，一般按照奇异值从大到小排列，方便统一化管理和后续操作：<br><img src="/2020/08/27/svd-pca/2.png" alt><br>那么奇异值是如何计算的呢？</p>
+<script type="math/tex; mode=display">A=U \Sigma V^{T} \Rightarrow A^{T}=V \Sigma U^{T} \Rightarrow A^{T} A=V \Sigma U^{T} U \Sigma V^{T}=V \Sigma^{2} V^{T}</script><p>所以说奇异值矩阵等于特征值矩阵的算术平方根。相比于之前的特征值分解，SVD可以应用于任意维度的矩阵，并且U,V是正交矩阵，S是对角阵，具体应用的时候会非常的方便。</p>
+<h2 id="奇异值分解矩阵"><a href="#奇异值分解矩阵" class="headerlink" title="奇异值分解矩阵"></a>奇异值分解矩阵</h2><p>为了让大家有一个深刻的印象，我举一个简单的例子来具体说明SVD是如何分解矩阵的。<br>对于矩阵A：</p>
+<script type="math/tex; mode=display">A=\left(\begin{array}{ccc}
+3 & 2 & 2 \\
+2 & 3 & -2
+\end{array}\right)</script><p>计算$ A A^{T} $与$ A^{T} A $的值得：</p>
+<script type="math/tex; mode=display">A A^{T}=\left(\begin{array}{cc}
+17 & 8 \\
+8 & 17
+\end{array}\right), \quad A^{T} A=\left(\begin{array}{ccc}
+13 & 12 & 2 \\
+12 & 13 & -2 \\
+2 & -2 & 8
+\end{array}\right)</script><p>上述矩阵都是半正定的，其特征值为25、9，也就是说A的奇异值为5、2。另外，这两个矩阵之间的联系为：<br><img src="/2020/08/27/svd-pca/3.png" alt><br>因此SVD的表达式为：</p>
+<script type="math/tex; mode=display">A=U S V^{T}=\left(\begin{array}{cc}
+1 / \sqrt{2} & 1 / \sqrt{2} \\
+1 / \sqrt{2} & -1 / \sqrt{2}
+\end{array}\right)\left(\begin{array}{ccc}
+5 & 0 & 0 \\
+0 & 3 & 0
+\end{array}\right)\left(\begin{array}{rrr}
+1 / \sqrt{2} & 1 / \sqrt{2} & 0 \\
+1 / \sqrt{18} & -1 / \sqrt{18} & 4 / \sqrt{18} \\
+2 / 3 & -2 / 3 & -1 / 3
+\end{array}\right)</script><p>上述所说的只是基本应用，下面我对SVD的公式进行基本的变换：</p>
+<script type="math/tex; mode=display">\begin{array}{l}
+A=U S V^{T} \\
+A V=U S
+\end{array}</script><p>也就是说SVD认为矩阵A是其所有奇异值与其对应的奇异向量的组合：</p>
+<script type="math/tex; mode=display">A=\sigma_{1} u_{1} v_{1}^{T}+\ldots+\sigma_{r} u_{r} v_{r}^{T}</script><p>上述公式是理解SVD矩阵分解的关键，它提供了一种重要的方法去拆解m*n数据矩阵至r个元素，现在我们在来重新分析下之前的例子是如何工作的：</p>
+<script type="math/tex; mode=display">A=\left(\begin{array}{ccc}
+3 & 2 & 2 \\
+2 & 3 & -2
+\end{array}\right)</script><p>矩阵A可以被拆解为：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+&=5\left(\begin{array}{ccc}
+1 / \sqrt{2} \\
+1 / \sqrt{2}
+\end{array}\right)\left(\begin{array}{cccc}
+1 / \sqrt{2} & 1 / \sqrt{2} & 0
+\end{array}\right)+3\left(\begin{array}{cc}
+1 / \sqrt{2} \\
+-1 / \sqrt{2}
+\end{array}\right)\left(\begin{array}{ccc}
+1 / \sqrt{18} & -1 / \sqrt{18} & 4 / \sqrt{18}
+\end{array}\right)\\
+&=\left(\begin{array}{ccc}
+3 & 2 & 2 \\
+2 & 3 & -2
+\end{array}\right)
+\end{aligned}</script><h2 id="奇异值分解应用"><a href="#奇异值分解应用" class="headerlink" title="奇异值分解应用"></a>奇异值分解应用</h2><h3 id="moore-penrose伪逆"><a href="#moore-penrose伪逆" class="headerlink" title="moore-penrose伪逆"></a>moore-penrose伪逆</h3><p>对于线性方程组而言，我们往往需要计算矩阵的逆，如下图所示：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+A x &=b \\
+x &=A^{-1} b
+\end{aligned}</script><p>但是对于大部分矩阵而言，都没有办法求其逆矩阵，因此在求解方程组时需要逆矩阵的替代品，moore-penrose伪逆提供了这样的一种方法，可以计算矩阵A的伪逆值，使得$ \left|A A^{+}-I_{n}\right|_{2} $ 最小，也就是伪逆矩阵$A^{+}$的相关性质最接近其逆矩阵，因此线性方程组的解就可以被估计为：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+A x &=b \\
+x & \approx A^{+} b
+\end{aligned}</script><p>其中，为逆矩阵$A^{+}$的具体求解方式如下：</p>
+<script type="math/tex; mode=display">\begin{array}{l}
+A x=b \\
+(U, D, V) \leftarrow \operatorname{svd}(A) \\
+A^{+}=V D^{+} U^{T} \\
+x=A^{+} b
+\end{array}</script><p>我们以一个简单的例子来具体说明：<br>$A=\left[\begin{array}{ll}1 &amp; 1 \\ 1 &amp; 1\end{array}\right] \quad$ </p>
+<p>$A=U \Sigma V^{T}=\frac{1}{\sqrt{2}}\left[\begin{array}{cc}1 &amp; 1 \\ 1 &amp; -1\end{array}\right]\left[\begin{array}{cc}2 &amp; 0 \\ 0 &amp; 0\end{array}\right] \frac{1}{\sqrt{2}}\left[\begin{array}{cc}1 &amp; 1 \\ 1 &amp; -1\end{array}\right]$</p>
+<p>$A^{+}=V \Sigma^{+} U^{T}=\frac{1}{\sqrt{2}}\left[\begin{array}{cc}1 &amp; 1 \\ 1 &amp; -1\end{array}\right]\left[\begin{array}{cc}1 / 2 &amp; 0 \\ 0 &amp; 0\end{array}\right] \frac{1}{\sqrt{2}}\left[\begin{array}{cc}1 &amp; 1 \\ 1 &amp; -1\end{array}\right]=\frac{1}{4}\left[\begin{array}{cc}1 &amp; 1 \\ 1 &amp; 1\end{array}\right]$</p>
+<p>&emsp;&emsp;moore-penrose伪逆的求解是基于奇异值分解的，通过上面的例子我们可以看出即便方阵不可逆，我们也能通过奇异值分解的方法得到其伪逆矩阵，也就是说该方法对于任意维度的任意矩阵都能适用。此外，待求矩阵A 的列数如果大于行数，得到就是所有可行解中L2范数最小的一个，如果相反，就是L2(Ax−y)最小</p>
+<h3 id="数据压缩"><a href="#数据压缩" class="headerlink" title="数据压缩"></a>数据压缩</h3><p>&emsp;&emsp;在奇异值矩阵中也是按照从大到小排列，而且奇异值的减少特别的快，在很多情况下，前10%甚至1%的奇异值的和就占了全部的奇异值之和的99%以上的比例。也就是说，我们也可以用最大的k个的奇异值和对应的左右奇异向量来近似描述矩阵:</p>
+<script type="math/tex; mode=display">A_{m \times n}=U_{m \times m} \Sigma_{m \times n} V_{n \times n}^{T} \approx U_{m \times k} \Sigma_{k \times k} V_{k \times n}^{T}</script><p>其中k要比n小很多，也就是一个大的矩阵A可以用三个小的矩阵$U_{m \times k}, \sum_{k \times k}, V_{k \times n}^{T}$来表示,这样就可以以舍弃部分精度来减少数据量。如下图所示，现在我们的矩阵A只需要灰色的部分的三个小矩阵就可以近似描述了。<br><img src="/2020/08/27/svd-pca/4.png" alt><br>由于这个重要的性质，SVD可以用于PCA降维，来做数据压缩和去噪，PCA具体原理可以参考<a target="_blank" rel="noopener" href="https://www.zhihu.com/question/41120789/answer/481966094"><strong>如何通俗易懂地讲解什么是 PCA 主成分分析</strong></a>。也可以用于推荐算法，将用户和喜好对应的矩阵做特征分解，进而得到隐含的用户需求来做推荐。同时也可以用于NLP中的算法，比如潜在语义索引（LSI）。</p>
 
     </div>
 
@@ -314,7 +410,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://cleverbobo.github.io/2020/08/27/svd-pca/" title="奇异值分解与主成分分析">http://cleverbobo.github.io/2020/08/27/svd-pca/</a>
+    <a href="http://cleverbobo.github.io/2020/08/27/svd-pca/" title="通俗理解奇异值分解">http://cleverbobo.github.io/2020/08/27/svd-pca/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -399,7 +495,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%BE%81%E5%80%BC%E5%88%86%E8%A7%A3"><span class="nav-number">2.</span> <span class="nav-text">特征值分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3"><span class="nav-number">3.</span> <span class="nav-text">奇异值分解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E7%9F%A9%E9%98%B5"><span class="nav-number">4.</span> <span class="nav-text">奇异值分解矩阵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E5%BA%94%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">奇异值分解应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#moore-penrose%E4%BC%AA%E9%80%86"><span class="nav-number">5.1.</span> <span class="nav-text">moore-penrose伪逆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="nav-number">5.2.</span> <span class="nav-text">数据压缩</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -561,6 +657,61 @@
   
 
   
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
 
   
 
