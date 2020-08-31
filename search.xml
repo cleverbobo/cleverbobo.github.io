@@ -12,7 +12,23 @@
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>机器学习，实例，入门</tag>
+        <tag>机器学习</tag>
+        <tag>实例</tag>
+        <tag>入门</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通俗理解卷积神经网络</title>
+    <url>/2020/08/31/cnn/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>卷积神经网络主要是对图片进行处理，比如说人脸识别等等。该种算法参考了人眼视觉的某些特性，利用某些特殊的卷积核对图像进行处理分割。下面，我将对卷积神经网络的来源，架构，优化，优劣以及应用等方面进行简单介绍。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2>]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>入门</tag>
+        <tag>课程</tag>
       </tags>
   </entry>
   <entry>
