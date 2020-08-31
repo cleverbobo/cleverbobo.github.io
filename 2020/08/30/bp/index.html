@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.1.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/cat-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/cat-32%C3%9732.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/cat-16%C3%9716.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"cleverbobo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"ture","show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="简介&amp;emsp;&amp;emsp;本篇blog将介绍神经网络的入门基础——深度感知机，简单介绍下深度感知机的结构，分析数据是如何前馈的，误差又是如何后馈，即误差如何反向传播，这是神经网络优化算法的核心。 背景介绍&amp;emsp;&amp;emsp;神经网络的灵感取自于生物上的神经元细胞，如下图所示：&amp;emsp;&amp;emsp;这是人体神经元的基本构成，其中树突主要用于接收其他神经元的信号，轴突用于输出该神经元的信号，数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度理解多层感知机（MLP）">
+<meta property="og:url" content="http://cleverbobo.github.io/2020/08/30/bp/index.html">
+<meta property="og:site_name" content="米奇妙妙屋">
+<meta property="og:description" content="简介&amp;emsp;&amp;emsp;本篇blog将介绍神经网络的入门基础——深度感知机，简单介绍下深度感知机的结构，分析数据是如何前馈的，误差又是如何后馈，即误差如何反向传播，这是神经网络优化算法的核心。 背景介绍&amp;emsp;&amp;emsp;神经网络的灵感取自于生物上的神经元细胞，如下图所示：&amp;emsp;&amp;emsp;这是人体神经元的基本构成，其中树突主要用于接收其他神经元的信号，轴突用于输出该神经元的信号，数">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/1.PNG">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/3.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/4.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/5.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/6.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/7.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/8.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/9.jpg">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/10.jpg">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/11.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/12.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/13.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/08/30/bp/14.png">
+<meta property="article:published_time" content="2020-08-30T14:05:49.000Z">
+<meta property="article:modified_time" content="2020-08-31T06:40:22.037Z">
+<meta property="article:author" content="clever_bobo">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="入门">
+<meta property="article:tag" content="课程">
+<meta property="article:tag" content="神经网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cleverbobo.github.io/2020/08/30/bp/1.PNG">
+
+<link rel="canonical" href="http://cleverbobo.github.io/2020/08/30/bp/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深度理解多层感知机（MLP） | 米奇妙妙屋</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --></head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">米奇妙妙屋</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">Clever_bobo's Blog</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>目录</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cleverbobo.github.io/2020/08/30/bp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="clever_bobo">
+      <meta itemprop="description" content="Sow nothing, reap nothing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="米奇妙妙屋">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度理解多层感知机（MLP）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-30 22:05:49" itemprop="dateCreated datePublished" datetime="2020-08-30T22:05:49+08:00">2020-08-30</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-31 14:40:22" itemprop="dateModified" datetime="2020-08-31T14:40:22+08:00">2020-08-31</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/30/bp/" class="post-meta-item leancloud_visitors" data-flag-title="深度理解多层感知机（MLP）" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/30/bp/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/30/bp/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>&emsp;&emsp;本篇blog将介绍神经网络的入门基础——深度感知机，简单介绍下深度感知机的结构，分析数据是如何前馈的，误差又是如何后馈，即误差如何反向传播，这是神经网络优化算法的核心。</p>
+<h2 id="背景介绍"><a href="#背景介绍" class="headerlink" title="背景介绍"></a>背景介绍</h2><p>&emsp;&emsp;神经网络的灵感取自于生物上的神经元细胞，如下图所示：<br><img src="/2020/08/30/bp/1.PNG" alt><br>&emsp;&emsp;这是人体神经元的基本构成，其中树突主要用于接收其他神经元的信号，轴突用于输出该神经元的信号，数以万计的神经元相互合作，使得我们人类能够进行高级的思考，能够不断地对新事物进行学习。因此，我们就希望仿照人类神经网络的结构，搭建一种人为的神经网络结构，从而使其能够完成一些计算任务，这也是神经网络名字的由来。</p>
+<a id="more"></a>
+<h2 id="节点结构"><a href="#节点结构" class="headerlink" title="节点结构"></a>节点结构</h2><p>&emsp;&emsp;神经网络中计算的基本单元是神经元，一般称作「节点」（node）或者「单元」（unit）。每个节点可以从其他节点接收输入，或者从外部源接收输入，然后计算输出。每个输入都各自的「权重」（weight，即 w），用于调节该输入对输出影响的大小，节点的结构如图所示：<br><img src="/2020/08/30/bp/3.png" alt><br>&emsp;&emsp;其中x1,x2作为该节点的输入，其权重分别为 w1 和 w2。同时，还有配有「偏置b」（bias）的输入 ，偏置的主要功能是为每一个节点提供可训练的常量值（在节点接收的正常输入以外）。神经元中偏置的作用，详见这个链接：(<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2480650/what-is-the-role-of-the-bias-in-neural-networks">https://stackoverflow.com/questions/2480650/what-is-the-role-of-the-bias-in-neural-networks</a>)<br>&emsp;&emsp;神经元的输出 Y 按照上图中的计算方式进行，其中函数 f 叫做激活函数，一般采用非线性函数，其作用是将非线性引入神经元的输出。因为大多数现实世界的数据都是非线性的，我们希望神经元能够学习非线性的函数表示，如果激活函数仍然是线性的，那么根据线性可叠加的原理，整个函数模型仍然是线性的，那么就无法解决我们遇到的问题（例如异或），因此激活函数非线性这一点非常重要。<br>&emsp;&emsp;每个（非线性）激活函数都接收一个数字，并进行特定、固定的数学计算 。在实践中，可能会碰到几种激活函数：</p>
+<ol>
+<li><p>Sigmoid（S 型激活函数）：输入一个实值，输出一个 0 至 1 间的值 σ(x) = 1 / (1 + exp(−x))</p>
+</li>
+<li><p>tanh（双曲正切函数）：输入一个实值，输出一个 [-1,1] 间的值 tanh(x) = 2σ(2x) − 1</p>
+</li>
+<li><p>ReLU：ReLU 代表修正线性单元。输出一个实值，并设定 0 的阈值（函数会将负值变为零）f(x) = max(0, x)<br><img src="/2020/08/30/bp/4.png" alt><br>如图所示，该图为不同的激活函数的曲线图，第一种就是逻辑回归使用的激活函数，往往应用于二分类；在神经网络中，我们往往更倾向于使用最后一种relu函数作为激活函数。</p>
+</li>
+</ol>
+<h2 id="MLP结构"><a href="#MLP结构" class="headerlink" title="MLP结构"></a>MLP结构</h2><p><img src="/2020/08/30/bp/5.png" alt><br>MLP的结构如图所示，主要由三部分组成，至少要有一个隐藏层。</p>
+<ol>
+<li><p>输入节点（Input Nodes）：输入节点从外部世界提供信息，总称为「输入层」。在输入节点中，不进行任何的计算，仅向隐藏节点传递信息。</p>
+</li>
+<li><p>隐藏节点（Hidden Nodes）：隐藏节点和外部世界没有直接联系（由此得名）。这些节点进行计算，并将信息从输入节点传递到输出节点。隐藏节点总称为「隐藏层」。尽管一个前馈神经网络只有一个输入层和一个输出层，但网络里可以没有隐藏层（如果没有隐藏层，激活函数选择sigmod，那么就变成逻辑回归了），也可以有多个隐藏层。</p>
+</li>
+<li><p>输出节点（Output Nodes）：输出节点总称为「输出层」，负责计算，并从网络向外部世界传递信息。</p>
+</li>
+</ol>
+<h2 id="数据前馈"><a href="#数据前馈" class="headerlink" title="数据前馈"></a>数据前馈</h2><p><img src="/2020/08/30/bp/6.png" alt><br>以之前的结构为例：</p>
+<p>(1) 输入层：输入层有三个节点。偏置节点值为 1。其他两个节点，X1 和 X2 取自外部输入（皆为根据输入数据集取的数字值）。和上文讨论的一样，在输入层不进行任何计算，所以输入层节点的输出是 1、X1 和 X2 三个值被传入隐藏层。</p>
+<p>(2) 隐藏层：隐藏层也有三个节点，偏置节点输出为 1。隐藏层其他两个节点的输出取决于输入层的输出（1，X1，X2）以及连接上所附的权重。图中显示了隐藏层（高亮）中一个输出的计算方式。其他隐藏节点的输出计算同理。需留意 <em>f </em>指代激活函数。这些输出会作为输出层的输入。</p>
+<p>(3) 输出层：输出层有两个节点，从隐藏层接收输入，并执行类似高亮出的隐藏层的计算。这些作为计算结果的计算值（Y1 和 Y2）就是多层感知器的输出。</p>
+<p>&emsp;&emsp;给出一系列特征 X = (x1, x2, …) 和目标 Y，一个多层感知器可以以分类或者回归为目的，学习到特征和目标之间的关系,从而建立模型。为了更好的理解多层感知器，我们举一个例子。假设我们有这样一个学生分数数据集：<br><img src="/2020/08/30/bp/7.png" alt><br>&emsp;&emsp;两个输入栏表示了学生学习的时间和期中考试的分数。最终结果栏可以有两种值，1 或者 0，来表示学生是否通过的期末考试。例如，我们可以看到，如果学生学习了 35 个小时并在期中获得了 67 分，他 / 她就会通过期末考试。现在我们假设我们想预测一个学习了 25 个小时并在期中考试中获得 70 分的学生是否能够通过期末考试。<br><img src="/2020/08/30/bp/8.png" alt></p>
+<p>&emsp;&emsp;这是一个二元分类问题，那么多层感知机又是如何利用这么多的数据的到我们想要的结果呢？<br>&emsp;&emsp;首先，对网络中所有的权重进行随机分配，假设从输入连接到这些节点的权重分别为 w1、w2 和 w3（如图所示）。神经网络会将第一个训练样本作为输入，那么网络的输入=[35, 67]，涉及到的节点的输出 V 可以按如下方式计算（<em>f</em> 是类似 Sigmoid 的激活函数）：V = f(1×w1 + 35×w2 + 67×w3），最后的得到我们的输出结果，假设输出层两个节点的输出概率分别为 0.4 和 0.6（因为权重随机，输出也会随机），但是我们期望的网络输出（目标）=[1, 0]，可以看出两者之间的差距还是蛮大的，那么我们该如何调整权重，使得输出的结果更加接近目标呢？这一点，我将在下一部分讲解，也就是我们的优化算法。</p>
+<h2 id="误差后馈"><a href="#误差后馈" class="headerlink" title="误差后馈"></a>误差后馈</h2><p>下面我们将介绍一个多层感知器如何调整权重：</p>
+<blockquote>
+<blockquote>
+<p>&emsp;&emsp;反向传播误差，通常缩写为「BackProp」，是几种训练人工神经网络的方法之一。这是一种监督学习方法，即通过标记的训练数据来学习（有监督者来引导学习）。简单说来，BackProp 就像「从错误中学习」。监督者在人工神经网络犯错误时进行纠正。一个人工神经网络包含多层的节点: 输入层，隐藏层和输出层。相邻层节点的连接都有配有「权重」。学习的目的是为这些边缘分配正确的权重。通过输入向量，这些权重可以决定输出向量。在监督学习中，训练集是已标注的。这意味着对于一些给定的输入，我们知道期望的输出（标注）。<br>&emsp;&emsp;反向传播算法：最初，所有的边权重（edge weight）都是随机分配的。对于所有训练数据集中的输入，人工神经网络都被激活，并且观察其输出。这些输出会和我们已知的、期望的输出进行比较，误差会「传播」回上一层。该误差会被标注，权重也会被相应的「调整」。该流程重复，直到输出误差低于制定的标准。上述算法结束后，我们就得到了一个学习过的人工神经网络，该网络被认为是可以接受「新」输入的。该人工神经网络可以说从几个样本（标注数据）和其错误（误差传播）中得到了学习。</p>
+</blockquote>
+</blockquote>
+<p>&emsp;&emsp;现在我们知道了反向传播的原理，我们回到上面的学生分数数据集。<br><img src="/2020/08/30/bp/9.jpg" alt><br>&emsp;&emsp;如图所示的多层感知器，其输入层有两个节点（除了偏置节点以外），两个节点分别接收「学习小时数」和「期中考试分数」。感知器也有一个包含两个节点的隐藏层（除了偏置节点以外）。输出层也有两个节点——上面一个节点输出「通过」的概率，下面一个节点输出「不通过」的概率。<br>&emsp;&emsp;在分类任务中，我们通常在感知器的输出层中使用 Softmax 函数作为激活函数，以保证输出的是概率并且相加等于 1。Softmax 函数接收一个随机实值的分数向量，转化成多个介于 0 和 1 之间、并且总和为 1 的多个向量值。所以，在这个例子中：概率（Pass）+概率（Fail）=1<br>&emsp;&emsp;在上一小节，我主要介绍了数据的前向传播，那么下面来重点讲解误差反向传播和权重更新：计算输出节点的总误差，并将这些误差用反向传播算法传播回网络，以计算梯度。接下来，我们使用类似梯度下降之类的算法来调整网络中的所有权重，目的是减少输出层的误差。下图展示了这一过程（暂时忽略图中的数学等式）。<br><img src="/2020/08/30/bp/10.jpg" alt><br>&emsp;&emsp;假设附给节点在反向传播和权重调整之后的新权重分别是 w4，w5 和 w6。接着用我们数据集中的其他训练样本来重复这一过程，不断迭代，这样，我们的网络就可以被视为学习了这些例子，从而使得输出误差不断减小，直到误差减小到一个合适的范围，那么我们就可以停止迭代了。这样我们就能够获得较为精准的预测模型。现在，如果我们想预测一个学习了 25 个小时、期中考试 70 分的学生是否能通过期末考试，我们可以通过前向传播步骤来计算 Pass 和 Fail 的输出概率。<br>更具体的bp算法推导可以参考：<a target="_blank" rel="noopener" href="http://home.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html">http://home.agh.edu.pl/~vlsi/AI/backp_t_en/backprop.html</a></p>
+<h2 id="过拟合与欠拟合"><a href="#过拟合与欠拟合" class="headerlink" title="过拟合与欠拟合"></a>过拟合与欠拟合</h2><p>&emsp;&emsp;过拟合是指训练误差小，但是泛化误差较大；欠拟合是指训练误差大，泛化误差也很大。下面，我主要针对神经网络做一些相关的讨论<br>&emsp;&emsp;神经网络相比于其他的机器学习算法，其功能更为强大，只要给予神经网络足够多的节点，理论上它就能拟合任意的模型，但是也有缺点，就是容易产生过拟合。那么产生过拟合的根本原因是什么呢？那是因为我们并不能保证训练样本完全正确，也就是可能存在部分的样本存在误导性，所以当神经网络功能过于强大时，很容易连训练样本中的错误样本也学习了，从而导致只能具有很低训练误差，而不能拥有较低的泛化误差，也就是我们所说的过拟合。最常见的方法之一是提前终止学习，如图所示：<br><img src="/2020/08/30/bp/11.png" alt><br>&emsp;&emsp;在合适的迭代次数终止算法从而达到最优容量（泛化误差最低），但是最佳迭代次数并不好找，往往需要多次测试才有可能找到，因此更常用的方法是“Dropout”防止过拟合，下面来重点讲解：</p>
+<h3 id="什么是Dropout"><a href="#什么是Dropout" class="headerlink" title="什么是Dropout"></a>什么是Dropout</h3><p>&emsp;&emsp;在2012年，Hinton在其论文《Improving neural networks by preventing co-adaptation of feature detectors》中提出Dropout。当一个复杂的前馈神经网络被训练在小的数据集时，容易造成过拟合。为了防止过拟合，可以通过阻止特征检测器的共同作用来提高神经网络的性能。<br>&emsp;&emsp;在2012年，Alex、Hinton在其论文《ImageNet Classification with Deep Convolutional Neural Networks》中用到了Dropout算法，用于防止过拟合。并且，这篇论文提到的AlexNet网络模型引爆了神经网络应用热潮，并赢得了2012年图像识别大赛冠军，使得CNN成为图像分类上的核心算法模型。<br>&emsp;&emsp;随后，又有一些关于Dropout的文章《Dropout:A Simple Way to Prevent Neural Networks from Overfitting》、《Improving Neural Networks with Dropout》、《Dropout as data augmentation》。<br>&emsp;&emsp;从上面的论文中，我们能感受到Dropout在深度学习中的重要性。那么，到底什么是Dropout呢？<br>&emsp;&emsp;Dropout可以作为训练深度神经网络的一种trick供选择。在每个训练批次中，通过忽略一半的特征检测器（让一半的隐层节点值为0），可以明显地减少过拟合现象。这种方式可以减少特征检测器（隐层节点）间的相互作用，检测器相互作用是指某些检测器依赖其他检测器才能发挥作用。<br>&emsp;&emsp;Dropout说的简单一点就是：我们在前向传播的时候，让某个神经元的激活值以一定的概率p停止工作，这样可以使模型泛化性更强，因为它不会太依赖某些局部的特征，如图1所示。<br><img src="/2020/08/30/bp/12.png" alt></p>
+<h3 id="Dropout工作流程及使用"><a href="#Dropout工作流程及使用" class="headerlink" title="Dropout工作流程及使用"></a>Dropout工作流程及使用</h3><h4 id="Dropout具体工作流程"><a href="#Dropout具体工作流程" class="headerlink" title="Dropout具体工作流程"></a>Dropout具体工作流程</h4><p>假设我们要训练这样一个神经网络，如图所示。<br><img src="/2020/08/30/bp/13.png" alt><br>输入是x，输出是y，正常的流程是：我们首先把x通过网络前向传播，然后把误差反向传播以决定如何更新参数让网络进行学习。使用Dropout之后，过程变成如下：</p>
+<p>（1）首先随机（临时）删掉网络中一半的隐藏神经元，输入输出神经元保持不变（图中虚线为部分临时被删除的神经元）<br><img src="/2020/08/30/bp/14.png" alt><br>（2） 然后把输入x通过修改后的网络前向传播，然后把得到的损失结果通过修改的网络反向传播。一小批训练样本执行完这个过程后，在没有被删除的神经元上按照随机梯度下降法更新对应的参数（w，b）。</p>
+<p>（3）然后继续重复这一过程：</p>
+<ul>
+<li>恢复被删掉的神经元（此时被删除的神经元保持原样，而没有被删除的神经元已经有所更新）</li>
+<li>从隐藏层神经元中随机选择一个一半大小（这个量可以自己选）的子集临时删除掉（备份被删除神经元的参数）。</li>
+<li>对一小批训练样本，先前向传播然后反向传播损失并根据随机梯度下降法更新参数（w，b） （没有被删除的那一部分参数得到更新，删除的神经元参数保持被删除前的结果）。</li>
+</ul>
+<h3 id="为什么说Dropout可以解决过拟合"><a href="#为什么说Dropout可以解决过拟合" class="headerlink" title="为什么说Dropout可以解决过拟合"></a>为什么说Dropout可以解决过拟合</h3><p><strong>（1）取平均的作用</strong>： 先回到标准的模型，即没有dropout，我们用相同的训练数据去训练5个不同的神经网络，一般会得到5个不同的结果，此时我们可以采用 “5个结果取均值”或者“多数取胜的投票策略”去决定最终结果。例如3个网络判断结果为数字9,那么很有可能真正的结果就是数字9，其它两个网络给出了错误结果。这种“综合起来取平均”的策略通常可以有效防止过拟合问题。因为不同的网络可能产生不同的过拟合，取平均则有可能让一些“相反的”拟合互相抵消。dropout掉不同的隐藏神经元就类似在训练不同的网络，随机删掉一半隐藏神经元导致网络结构已经不同，整个dropout过程就相当于对很多个不同的神经网络取平均。而不同的网络产生不同的过拟合，一些互为“反向”的拟合相互抵消就可以达到整体上减少过拟合。</p>
+<p><strong>（2）减少神经元之间复杂的共适应关系</strong>： 因为dropout程序导致两个神经元不一定每次都在一个dropout网络中出现。这样权值的更新不再依赖于有固定关系的隐含节点的共同作用，阻止了某些特征仅仅在其它特定特征下才有效果的情况 。迫使网络去学习更加鲁棒的特征 ，这些特征在其它的神经元的随机子集中也存在。换句话说假如我们的神经网络是在做出某种预测，它不应该对一些特定的线索片段太过敏感，即使丢失特定的线索，它也应该可以从众多其它线索中学习一些共同的特征。从这个角度看dropout就有点像L1，L2正则，减少权重使得网络对丢失特定神经元连接的鲁棒性提高。</p>
+<p><strong>（3）Dropout类似于性别在生物进化中的角色</strong>：物种为了生存往往会倾向于适应这种环境，环境突变则会导致物种难以做出及时反应，性别的出现可以繁衍出适应新环境的变种，有效的阻止过拟合，即避免环境改变时物种可能面临的灭绝。</p>
+<h2 id="初始参数的选取"><a href="#初始参数的选取" class="headerlink" title="初始参数的选取"></a>初始参数的选取</h2><p>在许多参考文献中都提到，对于神经网络而言。模型与优化的选取至关重要，当然这无可厚非，但是初始值的选取对于模型的训练也有一定程度的影响，不合适的初始值可能会耗费大量的训练时间，甚至有可能无法达到我们预期的目标，因此在这里简单介绍下初始值选取的一般规则：<br>(1) <strong>禁止将所有的权重均设置为同一个常数c，否则bp算法将会失效，所有的权重将不会更新！</strong><br>(2) 一般令权重W的初始值服从0均值的高斯分布，该分布的方差应该选择合适的大小，如果过小会导致梯度消失，过大会导致权重无法收敛。<br>(3) 方差选取的参考意见：第一种：$\sigma^{2}=2 /\left(n_{i n}+n_{o u t}\right)$，其中$n_{\text {in}}$ 与 $n_{\text {out}}$分别为该层的上一层节点数量与下一层节点数量；第二种：$\sigma^{2}=2 / n_{\text {in }}$ </p>
+
+    </div>
+
+    
+    
+    
+        <div class="reward-container">
+  <div>如果对您有用的话，这里可以打赏哦~</div>
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.png" alt="clever_bobo 微信支付">
+        <p>微信支付</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="clever_bobo 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>clever_bobo
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://cleverbobo.github.io/2020/08/30/bp/" title="深度理解多层感知机（MLP）">http://cleverbobo.github.io/2020/08/30/bp/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" rel="tag"># 机器学习</a>
+              <a href="/tags/%E5%85%A5%E9%97%A8/" rel="tag"># 入门</a>
+              <a href="/tags/%E8%AF%BE%E7%A8%8B/" rel="tag"># 课程</a>
+              <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" rel="tag"># 神经网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/28/sgd/" rel="prev" title="通俗理解梯度下降法">
+      <i class="fa fa-chevron-left"></i> 通俗理解梯度下降法
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">背景介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%E7%BB%93%E6%9E%84"><span class="nav-number">3.</span> <span class="nav-text">节点结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MLP%E7%BB%93%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">MLP结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E5%89%8D%E9%A6%88"><span class="nav-number">5.</span> <span class="nav-text">数据前馈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%B7%AE%E5%90%8E%E9%A6%88"><span class="nav-number">6.</span> <span class="nav-text">误差后馈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E4%B8%8E%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="nav-number">7.</span> <span class="nav-text">过拟合与欠拟合</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFDropout"><span class="nav-number">7.1.</span> <span class="nav-text">什么是Dropout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Dropout%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B%E5%8F%8A%E4%BD%BF%E7%94%A8"><span class="nav-number">7.2.</span> <span class="nav-text">Dropout工作流程及使用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Dropout%E5%85%B7%E4%BD%93%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">7.2.1.</span> <span class="nav-text">Dropout具体工作流程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4Dropout%E5%8F%AF%E4%BB%A5%E8%A7%A3%E5%86%B3%E8%BF%87%E6%8B%9F%E5%90%88"><span class="nav-number">7.3.</span> <span class="nav-text">为什么说Dropout可以解决过拟合</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8F%82%E6%95%B0%E7%9A%84%E9%80%89%E5%8F%96"><span class="nav-number">8.</span> <span class="nav-text">初始参数的选取</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="clever_bobo"
+      src="/images/head.jpg">
+  <p class="site-author-name" itemprop="name">clever_bobo</p>
+  <div class="site-description" itemprop="description">Sow nothing, reap nothing</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/cleverbobo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;cleverbobo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:977516585@qq.com" title="E-Mail → mailto:977516585@qq.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      友情链接
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.mereith.com/" title="https:&#x2F;&#x2F;www.mereith.com&#x2F;" rel="noopener" target="_blank">1.王璐</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://keras-cn.readthedocs.io/en/latest/" title="https:&#x2F;&#x2F;keras-cn.readthedocs.io&#x2F;en&#x2F;latest&#x2F;" rel="noopener" target="_blank">2.keras中文文档</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">clever_bobo</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='1' zIndex='-1' count='150' src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+          load: ['[tex]/mhchem'],
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+          packages: {'[+]': ['mhchem']},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : '908YB5AooMccKKe6QmAVecYA-gzGzoHsz',
+      appKey     : 'jPv4hearbUYOwrXYFVROlaOg',
+      placeholder: "不打赏就算了，要不留句话再走呗~",
+      avatar     : 'wavatar',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : '' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script>
+
+</body>
+</html>
