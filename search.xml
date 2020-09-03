@@ -3,8 +3,8 @@
   <entry>
     <title>解析论文《Context-aware Human Motion Prediction》</title>
     <url>/2020/09/03/HMP/</url>
-    <content><![CDATA[<p>论文原文地址：<div class="pdfobject-container" data-target="./HMP/hmp.pdf" data-height="500px"></div><br>测试外部链接： <div class="pdfobject-container" data-target="http://7xov2f.com1.z0.glb.clouddn.com/bash_freshman.pdf" data-height="500px"></div></p>
-]]></content>
+    <content><![CDATA[<p>论文原文地址：<a href="https://cleverbobo.github.io/file/hmp.pdf">https://cleverbobo.github.io/file/hmp.pdf</a></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2>]]></content>
       <categories>
         <category>机器学习</category>
       </categories>
