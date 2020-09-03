@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>解析论文《Context-aware Human Motion Prediction》</title>
+    <url>/2020/09/03/HMP/</url>
+    <content><![CDATA[<p>论文原文地址：<div class="pdfobject-container" data-target="./HMP/hmp.pdf" data-height="500px"></div><br>测试外部链接： <div class="pdfobject-container" data-target="http://7xov2f.com1.z0.glb.clouddn.com/bash_freshman.pdf" data-height="500px"></div></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>进阶</tag>
+        <tag>课程</tag>
+        <tag>英文论文解析</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python实现bp神经网络</title>
     <url>/2020/08/31/bp-program/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog是基于python的bp神经网络代码实现，本身没有借助任何包，主要是想对该算法进行一个深入了解。基于马疝病数据集的一个二分类，结构相对简单，准确性不是很高，但是对神经网络的深入理解有很大的启发</p>
@@ -27,8 +42,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>入门</tag>
         <tag>课程</tag>
+        <tag>入门</tag>
       </tags>
   </entry>
   <entry>
@@ -60,8 +75,8 @@
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>入门</tag>
         <tag>课程</tag>
+        <tag>入门</tag>
       </tags>
   </entry>
   <entry>
@@ -120,6 +135,7 @@
 
 <h2 id="插入公式"><a href="#插入公式" class="headerlink" title="插入公式"></a>插入公式</h2><p>参考链接：(<a href="https://www.jianshu.com/p/7ab21c7f0674">https://www.jianshu.com/p/7ab21c7f0674</a>)<br>按照参考链接里面的教程，将冲突的配置文件更改，即可在exo中渲染MathJax数学公式<br><br>但是该公式有严格的LaTeX语法，语法规则参考<a href="https://www.jianshu.com/p/25f0139637b7">《markdown中公式编辑教程》</a>,所以较为复杂，在这里推荐一种懒人方法：使用“mathpix”插件，官方的下载地址为(<a href="https://mathpix.com/)。">https://mathpix.com/)。</a><br>使用方法浅显易懂，注册账号登录，截屏选取公式，复制结果。如果是编辑公式，我们可以在word上编写或者写在纸上，用该软件转换格式，实测非常好用~</p>
 <h2 id="writage插件"><a href="#writage插件" class="headerlink" title="writage插件"></a>writage插件</h2><p>官方地址：(<a href="https://www.writage.com">https://www.writage.com</a>)<br>使用教程：(<a href="https://www.cnblogs.com/craigtaylor/p/13540170.html">https://www.cnblogs.com/craigtaylor/p/13540170.html</a>)<br>该插件可以将word文件转换为.md文件，但是经过我的实测，并不是很理想，待开发中~</p>
+<h2 id="插入pdf链接"><a href="#插入pdf链接" class="headerlink" title="插入pdf链接"></a>插入pdf链接</h2><p>安装插件<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-pdf</span><br></pre></td></tr></table></figure><br>之后就可以在新建的md文件中插入pdf链接了，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">外部链接：</span><br><span class="line">&#123;% pdf 链接地址 %&#125;</span><br><span class="line">本地连接：</span><br><span class="line">&#123;% pdf .&#x2F;pdf名字.pdf %&#125;</span><br></pre></td></tr></table></figure></p>
 <center> <font size="12" color="#DC143C" face="黑体">未完待续~</font> </center>
 
 ]]></content>
@@ -127,8 +143,8 @@
         <category>markdown</category>
       </categories>
       <tags>
-        <tag>markdown</tag>
         <tag>进阶</tag>
+        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -213,8 +229,8 @@ V_{\nabla W_{100}}=\beta V_{\nabla W_{99}}+(1-\beta) \nabla W_{100}
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>入门</tag>
         <tag>课程</tag>
+        <tag>入门</tag>
       </tags>
   </entry>
   <entry>
@@ -323,8 +339,8 @@ x=A^{+} b
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>入门</tag>
         <tag>课程</tag>
+        <tag>入门</tag>
       </tags>
   </entry>
   <entry>
@@ -401,8 +417,8 @@ x=A^{+} b
       </categories>
       <tags>
         <tag>机器学习</tag>
-        <tag>入门</tag>
         <tag>课程</tag>
+        <tag>入门</tag>
         <tag>神经网络</tag>
       </tags>
   </entry>
