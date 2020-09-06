@@ -61,6 +61,44 @@
       </tags>
   </entry>
   <entry>
+    <title>通俗理解Seq2Seq模型+Attention机制(待修正)</title>
+    <url>/2020/09/06/attention/</url>
+    <content><![CDATA[<h2 id="seq2seq模型"><a href="#seq2seq模型" class="headerlink" title="seq2seq模型"></a>seq2seq模型</h2><p>seq2seq本质上是一种encoder-decoder的框架，最典型的应用就是机器翻译问题，模型先使用编码器对源语言进行编码，得到固定长度的编码向量，然后在对该编码向量进行解码，得到对应的翻译语言向量。因为输入和输出都是序列数据，因此又被称为sequence-to-sequence，简称seq2seq，目前应用最多的编码解码器是RNN(LSTM，GRU)，但编码解码器并不仅限于RNN。<br><a id="more"></a></p>
+<h3 id="传统的几种seq2seq方式"><a href="#传统的几种seq2seq方式" class="headerlink" title="传统的几种seq2seq方式"></a>传统的几种seq2seq方式</h3><p>1.输入 $x$通过encoder编码，即RNN结构(这里以RNN结构为例，但不仅限于RNN结构)通过隐藏状态$h_{1}, h_{2}, \ldots, h_{t}$的不断传播，在传播过程中同时会产生输出 $y_{1}, y_{2}, \ldots, y_{t}$ ，然后形成编码向量 $\left[y_{1}, y_{2}, \ldots, y_{t}\right]$ ，在解码过程中编码向量每一步都会输入给decoder。<br><img src="/2020/09/06/attention/1.jpg" alt><br>2.如果decoder同样也是个RNN结构的话，那么可以利用上一时刻的输出来帮助预测。encoder的编码赋值给了decoder的初始hidden。decoder的初始标签是<SOS>特色的开始标签，对应着词表中这个标签的embedding。<br><img src="/2020/09/06/attention/2.jpg" alt><br>3.结合了前两种模式，decoder每一时刻的输入不仅有来自encoder的编码向量，还有上一时刻的输出，同时还有上一时刻的hidden。<br><img src="/2020/09/06/attention/3.jpg" alt><br>4.带有attention机制的编解码，encoder的RNN每一步都有一个输出 [公式] ，给每一个 [公式] 一个权重，计算带权求和的向量。这样做的好处是，每预测一个词都和原文本的部分最相关。<br><img src="/2020/09/06/attention/4.jpg" alt></SOS></p>
+<h3 id="attention编解码的过程"><a href="#attention编解码的过程" class="headerlink" title="attention编解码的过程"></a>attention编解码的过程</h3><p>输人： $\quad x=\left(x_{1}, \ldots, x_{T_{x}}\right),$ 输出： $\quad y=\left(y_{1}, \ldots, y_{T_{y}}\right)$<br>$h_{t}=R N N_{\text {encoder }}\left(x_{t}, h_{t-1}\right),$ Encoder方面接受每个单词的embedding以及上一个时 间点的hidden state, 输出是该时间点的hidden state。 $s_{t}=R N N_{\text {decoder}}\left(y_{t-1}^{\tilde{\tau}}, s_{t-1}\right),$ Decoder方面接受的是目标句子里单词的word<br>embedding以及上一个时间点的hidden state。在计算 $s_{1}$ 时, $\quad \tilde{y}_{0}$ 即encoder的编码向量, 可以是Encoder最后的hidden state, $\quad h_{t}$ 通过decoder的hidden states和encoder的hidden states来计算一个分数 $e_{i j}=\operatorname{score}\left(s_{i}, h_{j}\right)$<br>it算每一个encoder的hidden states的权重: $\quad \alpha_{i j}=\frac{\exp \left(e_{i j}\right)}{\sum_{k=1}^{T_{x}} \exp \left(e_{i k}\right)}$<br>・ 最后得到context vector，是对于encoder输出的hidden states的一个加权平均 $c_{i}=\sum_{j=1}^{T_{x}} \alpha_{i j} h_{j}$</p>
+<ul>
+<li>将context vector和decoder的hidden states串接起来 $\tilde{s}_{t}=\tanh \left(W_{c}\left[c_{t} ; s_{t}\right]\right)$<br>・计算最后的输出概率： $\quad p\left(y_{t} \mid y&lt;t, x\right)=s o f t m a x\left(W_{s} \tilde{s}_{t}\right)$<br>关于上式中的score方法：<br>(1) dot score function: 输入是encoder的所有hidden states H: 大小为(hid dim,seq length)。decoder在一个时间点上的hidden state, s: 大小为(hid dim, 1)。<br>・ 旋转H为(seq length, hid dim)与s做点杰得到大小为(sequence length,<br>1)的分数。<br>・ 对分数做softmax得到合为1的权重。 将H与上一步得到的权重做点乘得到大小为(hid dim, 1)的context vector。<br>(2) General score function: 输入是encoder的所有hidden states H: 大小为(hid $\operatorname{dim}_{-} 1,$ seq length), decoder在一个时间点上的hidden state, s: 大小为(hid dim_2, 1), 此处两个hidden state的纬度不一致。<br>旋转H为(seq length, hid dim1)与Wa(大小为hid dim_1,hid dim_2)做点乘，再和s做点乘得 到一个大小为(seq length, 1)的分数。<br>・ 对分数做softmax得到一个合为1的权重。 将H与第二步得到的权重做点拜得到一个大小为(hid dim_1, 1)的context vector。</li>
+</ul>
+<h3 id="attention机制的原理"><a href="#attention机制的原理" class="headerlink" title="attention机制的原理"></a>attention机制的原理</h3><p>神经学中的注意力机制有两种：</p>
+<p>(1)自上而下的有意识的注意力，称为聚焦式注意力(Focus Attention)，聚焦式注意力是指有预定目的，依赖任务的，主动有意识地聚焦与某一对象的注意力。</p>
+<p>(2)自下而上的无意识的注意力，称为基于显著性注意力(Saliency-Based Attention)。是由外界刺激驱动的注意，不需要主动去干预，和任务无关。如果一个对象的刺激信息不同于其周围信息，一种无意识的“赢者通吃”(Winner-Take-All)或者门控(Gating)机制就可以把注意力转向这个对象。</p>
+<p>当你在听你的朋友说话时，你专注于你朋友的说话而忽略了周围其他的声音，这就是聚焦式注意力，当你在其他周围声音中听到了感兴趣的词时，你会马上注意到，这是显著性注意力。</p>
+<p>给定N组信息输入 $X=\left[x_{1}, x_{2}, \ldots, x_{N}\right],$ 每个向量 $x_{i}, i \in[1, N]$ 都表示一组输入信 息。注意力机馳的计算分为两步：一是在所有输入信息上计算注意力分布, 二是根据注意力分布来 计算输入信息的加权平均。</p>
+<p>注意力分布：为了从N个输入向量 $\left[x_{1}, x_{2}, \ldots, x_{N}\right]$ 中选择出和某个特定任务相关的信息, 需 要引入一个和任务相关的表示称为直询向量(Query Vector)，并通过一个打分函数score0计算每 个输入向量和直词向量之间的相关性。<br>给定一个和任务相关的直词向量q, 用注意力变量 $z \in[1, N]$ 来表示被选择信息的索引位置, 即 $z=i$ 表示选择了第i个输入向量。首先计算在给定q和X下，选择第i个输入向量的概率 $\alpha_{i}$ (权 重)</p>
+<script type="math/tex; mode=display">
+\alpha_{i}=p(z=i \mid X, q)=\operatorname{softmax}\left(s\left(x_{i}, q\right)\right)=\frac{\exp \left(s\left(x_{i}, q\right)\right)}{\sum_{j=1}^{N} \exp \left(s\left(x_{j}, q\right)\right)}</script><p>$\alpha_{i}$ 为注意力分布权重, $\quad s\left(x_{i}, q\right)$ 为注意力打分函数, 打分函数有很多种方式比如 :</p>
+<ol>
+<li>加性模型: $\quad s\left(x_{i}, q\right)=v^{T} \tanh \left(W x_{i}+U q\right)$</li>
+<li>点积模型： $\quad s\left(x_{i}, q\right)=x_{i}^{T} q$</li>
+<li>缩放点积模型: $\quad s\left(x_{i}, q\right)=\frac{x_{i}^{T} q}{\sqrt{d}}$</li>
+<li>双线性模型: $\quad s\left(x_{i}, q\right)=x_{i}^{T} W q$<br>$W, U, v$ 为可学习的参数, $\quad d$ 为输入向量的维度。<br>点积模型在实现上更好的利用了矩阵乘积, 从而计算效率更高, 但是当输入向量的维度d比较高, 点积模型的值通常有比较大的方差, 从而导致softmax函数的梯度比较小，缩放点积模型可以较好 的解决此问题。双线性模型可以看作是一种泛化的点积模型, 假设双线性模型公式中 $W=U^{T} V,$ 原式可写为 $s\left(x_{i}, q\right)=x_{i}^{T} U^{T} V q=(U x)^{T}(V q),$ 分别对X和q进行线性<br>变换后计算点积, 相比与点积模型, 双线性模型在计算相似度时引入了非对称性。<br>加权平均：注意力分布 $\alpha_{i}$ 可以理解为在给定任务相关的查词q时，第i个输入向量受关注的程 度。 $a t t(X, q)=\sum_{i=1}^{N} \alpha_{i} x_{i}$<br><img src="/2020/09/06/attention/5.jpg" alt></li>
+</ol>
+<p>硬性注意力<br>软性注意力其选择的信息是所有输入信息在注意力分布下的期望。还有一种只关注到某一位置上的 信息，叫做硬性注意力(Hard Attention)。<br>选择最高概率的输入信息: $\quad a t t(X, q)=x_{j},$ j为概率最大的输入信息的下标，即</p>
+<script type="math/tex; mode=display">
+j=\operatorname{argmax} \alpha_{i}, i \in[1, N]</script><p>硬性注意力缺点是基于最大采样或随机采样的方式来选抨信息。因此最终的损失函数与注意力分布 之间的函数关系不可导，无法使用反向传播算法进行训练。为了使用反向传播算法，一般使用软性 注意力来代替硬性注意力。<br>键值对注意力<br>可以用键值对(key-value pair)格式来表示输入信息，其中 “键” 计算注意力分布 $\alpha_{i},$ “值”用来 计算聚合信息。<br>用 $(K, V)=\left[\left(k_{1}, v_{1}\right), \ldots,\left(k_{N}, v_{N}\right)\right]$ 表示N个输入信息，给定任务相关的查词向量q时, 注意力函数：</p>
+<script type="math/tex; mode=display">
+a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left(s\left(k_{i}, q\right)\right)}{\sum_{j=1}^{N} \exp \left(s\left(k_{j}, q\right)\right)} v_{i}</script><p>其中 $s\left(k_{i}, q\right)$ 为打分函数.当 $K=V$ 时，鍵值对模式就等价于普通的注意力机制。</p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>进阶</tag>
+        <tag>课程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>python实现bp神经网络</title>
     <url>/2020/08/31/bp-program/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog是基于python的bp神经网络代码实现，本身没有借助任何包，主要是想对该算法进行一个深入了解。基于马疝病数据集的一个二分类，结构相对简单，准确性不是很高，但是对神经网络的深入理解有很大的启发</p>
@@ -78,7 +116,7 @@
       </tags>
   </entry>
   <entry>
-    <title>通俗理解卷积神经网络</title>
+    <title>通俗理解卷积神经网络(待更新)</title>
     <url>/2020/08/31/cnn/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>卷积神经网络主要是对图片进行处理，比如说人脸识别等等。该种算法参考了人眼视觉的某些特性，利用某些特殊的卷积核对图像进行处理分割。下面，我将对卷积神经网络的来源，架构，优化，优劣以及应用等方面进行简单介绍。</p>
 <h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2>]]></content>
@@ -125,28 +163,6 @@
       </tags>
   </entry>
   <entry>
-    <title>markdown进阶心得（更新中）</title>
-    <url>/2020/08/27/markdown2/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要是在编辑markdown时，遇到了很多问题，同时也找到了很多技巧，所以在这里mark一下</p>
-<h2 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h2><p>英文字符空格 <code>&amp;ensp;</code><br>中文字符空格 <code>&amp;emsp;</code><br>不断行的空白格 <code>&amp;nbsp;</code><br>其中较为常用的是<code>&amp;emsp;</code>,其效果如下：<br>&emsp;&emsp;<strong>首行缩进两字符</strong><br><a id="more"></a></p>
-<h2 id="文字居中"><a href="#文字居中" class="headerlink" title="文字居中"></a>文字居中</h2><p>文字居中使用<code>&lt;center&gt; ``&lt;/center&gt;</code>来括住文字，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;center&gt; 文字居中&lt;&#x2F;center&gt; </span><br></pre></td></tr></table></figure><br>效果展示：</p>
-<center> 文字居中</center> 
-
-<h2 id="插入公式"><a href="#插入公式" class="headerlink" title="插入公式"></a>插入公式</h2><p>参考链接：(<a href="https://www.jianshu.com/p/7ab21c7f0674">https://www.jianshu.com/p/7ab21c7f0674</a>)<br>按照参考链接里面的教程，将冲突的配置文件更改，即可在exo中渲染MathJax数学公式<br><br>但是该公式有严格的LaTeX语法，语法规则参考<a href="https://www.jianshu.com/p/25f0139637b7">《markdown中公式编辑教程》</a>,所以较为复杂，在这里推荐一种懒人方法：使用“mathpix”插件，官方的下载地址为(<a href="https://mathpix.com/)。">https://mathpix.com/)。</a><br>使用方法浅显易懂，注册账号登录，截屏选取公式，复制结果。如果是编辑公式，我们可以在word上编写或者写在纸上，用该软件转换格式，实测非常好用~</p>
-<h2 id="writage插件"><a href="#writage插件" class="headerlink" title="writage插件"></a>writage插件</h2><p>官方地址：(<a href="https://www.writage.com">https://www.writage.com</a>)<br>使用教程：(<a href="https://www.cnblogs.com/craigtaylor/p/13540170.html">https://www.cnblogs.com/craigtaylor/p/13540170.html</a>)<br>该插件可以将word文件转换为.md文件，但是经过我的实测，并不是很理想，待开发中~</p>
-<h2 id="插入pdf链接"><a href="#插入pdf链接" class="headerlink" title="插入pdf链接"></a>插入pdf链接</h2><p>安装插件<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-pdf</span><br></pre></td></tr></table></figure><br>之后就可以在新建的md文件中插入pdf链接了，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">外部链接：</span><br><span class="line">&#123;% pdf 链接地址 %&#125;</span><br><span class="line">本地连接：</span><br><span class="line">&#123;% pdf .&#x2F;pdf名字.pdf %&#125;</span><br></pre></td></tr></table></figure></p>
-<center> <font size="12" color="#DC143C" face="黑体">未完待续~</font> </center>
-
-]]></content>
-      <categories>
-        <category>markdown</category>
-      </categories>
-      <tags>
-        <tag>进阶</tag>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>markdown基本语法一</title>
     <url>/2020/08/26/markdown1/</url>
     <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要面向初步接触markdown的小白，主要是面向windows用户，简单介绍markdown语法规则，同时方便自己在忘记时能快速查看~<br>本文参考文献：<br><a href="https://hyxxsfwy.github.io/2016/01/15/Hexo-Markdown-%E7%AE%80%E6%98%8E%E8%AF%AD%E6%B3%95%E6%89%8B%E5%86%8C">一、简明语法手册</a><br><a href="https://www.mereith.com/2018/12/08/markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/">二、某知名哲学家的blog</a><br><a href="https://www.jianshu.com/p/191d1e21f7ed/">三、Markdown基本语法</a><br><a href="https://www.jianshu.com/p/599857933f6e">四、Markdown基本语法总结</a></p>
@@ -189,6 +205,29 @@
       </categories>
       <tags>
         <tag>入门</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>markdown进阶心得（更新中）</title>
+    <url>/2020/08/27/markdown2/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要是在编辑markdown时，遇到了很多问题，同时也找到了很多技巧，所以在这里mark一下</p>
+<h2 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h2><p>英文字符空格 <code>&amp;ensp;</code><br>中文字符空格 <code>&amp;emsp;</code><br>不断行的空白格 <code>&amp;nbsp;</code><br>其中较为常用的是<code>&amp;emsp;</code>,其效果如下：<br>&emsp;&emsp;<strong>首行缩进两字符</strong><br><a id="more"></a></p>
+<h2 id="文字居中"><a href="#文字居中" class="headerlink" title="文字居中"></a>文字居中</h2><p>文字居中使用<code>&lt;center&gt; ``&lt;/center&gt;</code>来括住文字，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;center&gt; 文字居中&lt;&#x2F;center&gt; </span><br></pre></td></tr></table></figure><br>效果展示：</p>
+<center> 文字居中</center> 
+
+<h2 id="插入公式"><a href="#插入公式" class="headerlink" title="插入公式"></a>插入公式</h2><p>参考链接：(<a href="https://www.jianshu.com/p/7ab21c7f0674">https://www.jianshu.com/p/7ab21c7f0674</a>)<br>按照参考链接里面的教程，将冲突的配置文件更改，即可在exo中渲染MathJax数学公式<br><br>但是该公式有严格的LaTeX语法，语法规则参考<a href="https://www.jianshu.com/p/25f0139637b7">《markdown中公式编辑教程》</a>,所以较为复杂，在这里推荐一种懒人方法：使用“mathpix”插件，官方的下载地址为(<a href="https://mathpix.com/)。">https://mathpix.com/)。</a><br>使用方法浅显易懂，注册账号登录，截屏选取公式，复制结果。如果是编辑公式，我们可以在word上编写或者写在纸上，用该软件转换格式，实测非常好用~</p>
+<h2 id="writage插件"><a href="#writage插件" class="headerlink" title="writage插件"></a>writage插件</h2><p>官方地址：(<a href="https://www.writage.com">https://www.writage.com</a>)<br>使用教程：(<a href="https://www.cnblogs.com/craigtaylor/p/13540170.html">https://www.cnblogs.com/craigtaylor/p/13540170.html</a>)<br>该插件可以将word文件转换为.md文件，但是经过我的实测，并不是很理想，待开发中~</p>
+<h2 id="插入pdf链接"><a href="#插入pdf链接" class="headerlink" title="插入pdf链接"></a>插入pdf链接</h2><p>安装插件<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-pdf</span><br></pre></td></tr></table></figure><br>之后就可以在新建的md文件中插入pdf链接了，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">外部链接：</span><br><span class="line">&#123;% pdf 链接地址 %&#125;</span><br><span class="line">本地连接：</span><br><span class="line">&#123;% pdf .&#x2F;pdf名字.pdf %&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用文献时，注意被引用的语句与上下段落之间空出一行</p>
+<center> <font size="12" color="#DC143C" face="黑体">未完待续~</font> </center>
+
+]]></content>
+      <categories>
+        <category>markdown</category>
+      </categories>
+      <tags>
+        <tag>进阶</tag>
         <tag>markdown</tag>
       </tags>
   </entry>
