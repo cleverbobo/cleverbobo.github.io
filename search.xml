@@ -116,20 +116,6 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
       </tags>
   </entry>
   <entry>
-    <title>通俗理解卷积神经网络(待更新)</title>
-    <url>/2020/08/31/cnn/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>卷积神经网络主要是对图片进行处理，比如说人脸识别等等。该种算法参考了人眼视觉的某些特性，利用某些特殊的卷积核对图像进行处理分割。下面，我将对卷积神经网络的来源，架构，优化，优劣以及应用等方面进行简单介绍。</p>
-<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2>]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>课程</tag>
-        <tag>入门</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>深度理解逻辑回归</title>
     <url>/2020/08/27/log-regression/</url>
     <content><![CDATA[<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2><p>&emsp;&emsp;所谓机器学习，听起来很高深莫测，实际上并不复杂，简单来说就是数据驱动的算法。而数据驱动就是指在给定的数据情况下，我们需要找到一种合适的算法对这些数据进行操作，从而实现我们预期的目标，具体我们需要做的任务就是找到合适的模型来描述输入到输出之间的映射关系，然后在使用优化的方法不断对模型中的参数进行优化，使得最后得到的结果鲁棒性最高。在上述的描述中，主要涉及两个方面：1.合适的模型 2.合适的优化算法。其实，我们在初中就接触过相关的领域，比如给定一系列坐标点（x，y），利用线性回归公式（最小二乘法）拟合曲线y=ax+b。其中，y=ax+b就是我们选择的模型，而最小二乘法就是对其参数a，b的优化算法。当然，这只是最简单的应用，实际机器学习的算法往往要比这个复杂很多，但究其本质还是一样的。<br>&emsp;&emsp;对于机器学习而言，其功能非常强大，能完成分类、回归、转录、机器翻译、异常与检测、合成和采样等等。其中，分类与回归是机器学习的最基本的两项功能。上述举的例子就是回归算法。而今天，我主要介绍一种常用的分类算法——逻辑回归。对于分类的而言，逻辑回归是一种重要的学习方式，该方法所假设的函数在经过优化后的到模型适用性非常高。另外，之所以该方法在名称中带有回归二字，是因为其算法原理与线性回归之间有很深的联系，在下面介绍算法原理的时候我会重点讲解。</p>
@@ -206,6 +192,20 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
       <tags>
         <tag>入门</tag>
         <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>通俗理解卷积神经网络(待更新)</title>
+    <url>/2020/08/31/cnn/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>卷积神经网络主要是对图片进行处理，比如说人脸识别等等。该种算法参考了人眼视觉的某些特性，利用某些特殊的卷积核对图像进行处理分割。下面，我将对卷积神经网络的来源，架构，优化，优劣以及应用等方面进行简单介绍。</p>
+<h2 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h2>]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>课程</tag>
+        <tag>入门</tag>
       </tags>
   </entry>
   <entry>
@@ -318,6 +318,23 @@ V_{\nabla W_{100}}=\beta V_{\nabla W_{99}}+(1-\beta) \nabla W_{100}
       </tags>
   </entry>
   <entry>
+    <title>基于SVD的图片分解</title>
+    <url>/2020/08/28/svd-program/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇python基于numpy包实现SVD，因为有现成的API，所以直接调用即可。本代码实现对图片的奇异值分解效果展示</p>
+<a id="more"></a>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.image <span class="keyword">as</span> mpimg</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">用户手册-by clever_bobo</span></span><br><span class="line"><span class="string">本函数用于测试奇异矩阵对图片进行分解，暂未设置任何纠错设置，请按照对应参数进行输入</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#读取文件，方块图像与风景图像</span></span><br><span class="line">im_square=mpimg.imread(<span class="string">r&quot;C:\Users\97751\Desktop\SVD\test1.png&quot;</span>)</span><br><span class="line">im_nature=mpimg.imread(<span class="string">r&quot;C:\Users\97751\Desktop\SVD\test2.png&quot;</span>)</span><br><span class="line"><span class="comment">#读取图片大小</span></span><br><span class="line">s1,s2,s3=im_square.shape</span><br><span class="line">n1,n2,n3=im_nature.shape</span><br><span class="line"><span class="comment">#转换格式</span></span><br><span class="line">im_square_temp = im_square.reshape(s1,s2 * s3)</span><br><span class="line">im_nature_temp = im_nature.reshape(n1, n2 * n3)</span><br><span class="line"><span class="comment">#调用numpy库中的线性函数的库</span></span><br><span class="line">U1,S1,VT1=np.linalg.svd(im_square_temp)</span><br><span class="line">U2,S2,VT2=np.linalg.svd(im_nature_temp)</span><br><span class="line"><span class="comment">#设置标志位</span></span><br><span class="line">flag=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> flag!=<span class="number">1</span>:</span><br><span class="line">    <span class="comment">#设置精度</span></span><br><span class="line">    nums=int(input(<span class="string">&quot;请输入保留的多少位奇异值：&quot;</span>))   </span><br><span class="line">    <span class="comment">#对方块图形进行SVD分解</span></span><br><span class="line">    img_square = (U1[:,<span class="number">0</span>:nums]).dot(np.diag(S1[<span class="number">0</span>:nums])).dot(VT1[<span class="number">0</span>:nums,:])</span><br><span class="line">    img_square= img_square.reshape(s1, s2 , s3)</span><br><span class="line">    <span class="comment">#对风景图形进行SVD分解</span></span><br><span class="line">    img_nature = (U2[:,<span class="number">0</span>:nums]).dot(np.diag(S2[<span class="number">0</span>:nums])).dot(VT2[<span class="number">0</span>:nums,:])</span><br><span class="line">    img_nature= img_nature.reshape(n1, n2 , n3)</span><br><span class="line">    <span class="comment">#精度分析</span></span><br><span class="line">    error1,error2=sum(S1[<span class="number">0</span>:nums])/sum(S1)*<span class="number">10000</span>//<span class="number">1</span>*<span class="number">0.01</span>,sum(S2[<span class="number">0</span>:nums])/sum(S2)*<span class="number">10000</span>//<span class="number">1</span>*<span class="number">0.01</span></span><br><span class="line">    <span class="comment">#画图部分</span></span><br><span class="line">    fig,ax=plt.subplots(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">    <span class="comment">#原始方块输出</span></span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">0</span>].imshow(im_square)</span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">0</span>].set(title = <span class="string">&quot;original square&quot;</span>)</span><br><span class="line">    <span class="comment">#SVD方块输出</span></span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">1</span>].imshow(img_square)</span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">1</span>].set(title = <span class="string">&quot; SVD&#x27;s square  precision=&quot;</span>+str(error1)+<span class="string">&#x27;%&#x27;</span>)</span><br><span class="line">    <span class="comment">#原始山脉输出</span></span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">0</span>].imshow(im_nature)</span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">0</span>].set(title = <span class="string">&quot;original nature&quot;</span>)</span><br><span class="line">    <span class="comment">#SVD山脉输出</span></span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">1</span>].imshow(img_nature)</span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">1</span>].set(title = <span class="string">&quot; SVD&#x27;s nature precision=&quot;</span>+str(error2)+<span class="string">&#x27;%&#x27;</span>)</span><br><span class="line">    plt.show()</span><br><span class="line">    flag=int(input(<span class="string">&quot;是否结束SVD分解？是请输入1: &quot;</span>))</span><br><span class="line">print(<span class="string">&quot;感谢使用测试——by clever_bobo!!!&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><p>保留1位奇异值：<br><img src="/2020/08/28/svd-program/1.png" alt><br>保留5位奇异值：<br><img src="/2020/08/28/svd-program/2.png" alt><br>保留10位奇异值：<br><img src="/2020/08/28/svd-program/3.png" alt><br>保留50位奇异值：<br><img src="/2020/08/28/svd-program/4.png" alt><br>保留100位奇异值：<br><img src="/2020/08/28/svd-program/5.png" alt></p>
+<p><strong>保留的奇异值位数越多，保留的信息就越多</strong></p>
+]]></content>
+      <categories>
+        <category>机器学习</category>
+      </categories>
+      <tags>
+        <tag>机器学习</tag>
+        <tag>实例</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>通俗理解奇异值分解</title>
     <url>/2020/08/27/svd-pca/</url>
     <content><![CDATA[<p>参考链接：</p>
@@ -425,23 +442,6 @@ x=A^{+} b
         <tag>机器学习</tag>
         <tag>课程</tag>
         <tag>入门</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基于SVD的图片分解</title>
-    <url>/2020/08/28/svd-program/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇python基于numpy包实现SVD，因为有现成的API，所以直接调用即可。本代码实现对图片的奇异值分解效果展示</p>
-<a id="more"></a>
-<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> matplotlib.image <span class="keyword">as</span> mpimg</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">用户手册-by clever_bobo</span></span><br><span class="line"><span class="string">本函数用于测试奇异矩阵对图片进行分解，暂未设置任何纠错设置，请按照对应参数进行输入</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="comment">#读取文件，方块图像与风景图像</span></span><br><span class="line">im_square=mpimg.imread(<span class="string">r&quot;C:\Users\97751\Desktop\SVD\test1.png&quot;</span>)</span><br><span class="line">im_nature=mpimg.imread(<span class="string">r&quot;C:\Users\97751\Desktop\SVD\test2.png&quot;</span>)</span><br><span class="line"><span class="comment">#读取图片大小</span></span><br><span class="line">s1,s2,s3=im_square.shape</span><br><span class="line">n1,n2,n3=im_nature.shape</span><br><span class="line"><span class="comment">#转换格式</span></span><br><span class="line">im_square_temp = im_square.reshape(s1,s2 * s3)</span><br><span class="line">im_nature_temp = im_nature.reshape(n1, n2 * n3)</span><br><span class="line"><span class="comment">#调用numpy库中的线性函数的库</span></span><br><span class="line">U1,S1,VT1=np.linalg.svd(im_square_temp)</span><br><span class="line">U2,S2,VT2=np.linalg.svd(im_nature_temp)</span><br><span class="line"><span class="comment">#设置标志位</span></span><br><span class="line">flag=<span class="number">0</span></span><br><span class="line"><span class="keyword">while</span> flag!=<span class="number">1</span>:</span><br><span class="line">    <span class="comment">#设置精度</span></span><br><span class="line">    nums=int(input(<span class="string">&quot;请输入保留的多少位奇异值：&quot;</span>))   </span><br><span class="line">    <span class="comment">#对方块图形进行SVD分解</span></span><br><span class="line">    img_square = (U1[:,<span class="number">0</span>:nums]).dot(np.diag(S1[<span class="number">0</span>:nums])).dot(VT1[<span class="number">0</span>:nums,:])</span><br><span class="line">    img_square= img_square.reshape(s1, s2 , s3)</span><br><span class="line">    <span class="comment">#对风景图形进行SVD分解</span></span><br><span class="line">    img_nature = (U2[:,<span class="number">0</span>:nums]).dot(np.diag(S2[<span class="number">0</span>:nums])).dot(VT2[<span class="number">0</span>:nums,:])</span><br><span class="line">    img_nature= img_nature.reshape(n1, n2 , n3)</span><br><span class="line">    <span class="comment">#精度分析</span></span><br><span class="line">    error1,error2=sum(S1[<span class="number">0</span>:nums])/sum(S1)*<span class="number">10000</span>//<span class="number">1</span>*<span class="number">0.01</span>,sum(S2[<span class="number">0</span>:nums])/sum(S2)*<span class="number">10000</span>//<span class="number">1</span>*<span class="number">0.01</span></span><br><span class="line">    <span class="comment">#画图部分</span></span><br><span class="line">    fig,ax=plt.subplots(<span class="number">2</span>,<span class="number">2</span>)</span><br><span class="line">    <span class="comment">#原始方块输出</span></span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">0</span>].imshow(im_square)</span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">0</span>].set(title = <span class="string">&quot;original square&quot;</span>)</span><br><span class="line">    <span class="comment">#SVD方块输出</span></span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">1</span>].imshow(img_square)</span><br><span class="line">    ax[<span class="number">0</span>][<span class="number">1</span>].set(title = <span class="string">&quot; SVD&#x27;s square  precision=&quot;</span>+str(error1)+<span class="string">&#x27;%&#x27;</span>)</span><br><span class="line">    <span class="comment">#原始山脉输出</span></span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">0</span>].imshow(im_nature)</span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">0</span>].set(title = <span class="string">&quot;original nature&quot;</span>)</span><br><span class="line">    <span class="comment">#SVD山脉输出</span></span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">1</span>].imshow(img_nature)</span><br><span class="line">    ax[<span class="number">1</span>][<span class="number">1</span>].set(title = <span class="string">&quot; SVD&#x27;s nature precision=&quot;</span>+str(error2)+<span class="string">&#x27;%&#x27;</span>)</span><br><span class="line">    plt.show()</span><br><span class="line">    flag=int(input(<span class="string">&quot;是否结束SVD分解？是请输入1: &quot;</span>))</span><br><span class="line">print(<span class="string">&quot;感谢使用测试——by clever_bobo!!!&quot;</span>)</span><br></pre></td></tr></table></figure>
-<h2 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h2><p>保留1位奇异值：<br><img src="/2020/08/28/svd-program/1.png" alt><br>保留5位奇异值：<br><img src="/2020/08/28/svd-program/2.png" alt><br>保留10位奇异值：<br><img src="/2020/08/28/svd-program/3.png" alt><br>保留50位奇异值：<br><img src="/2020/08/28/svd-program/4.png" alt><br>保留100位奇异值：<br><img src="/2020/08/28/svd-program/5.png" alt></p>
-<p><strong>保留的奇异值位数越多，保留的信息就越多</strong></p>
-]]></content>
-      <categories>
-        <category>机器学习</category>
-      </categories>
-      <tags>
-        <tag>机器学习</tag>
-        <tag>实例</tag>
       </tags>
   </entry>
   <entry>
