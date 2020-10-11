@@ -22,18 +22,22 @@
 
   <meta name="description" content="&amp;emsp;&amp;emsp;最近从老师那里搞到了一个Jason nano开发板，本来里面有一个系统，然而断电导致系统文件损坏，使得系统无法正常启动，无限重启，我从各个网站看到的教程都不太行，只能把sd卡拔下来，重刷一遍系统，把里面的深度学习环境配置一下，中间遇到了很多坑，写个blog记录一下~">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Jason nano平台深度学习环境配置">
+<meta property="og:title" content="Jetson nano平台深度学习环境配置">
 <meta property="og:url" content="http://cleverbobo.github.io/2020/10/09/nano1/index.html">
 <meta property="og:site_name" content="米奇妙妙屋">
 <meta property="og:description" content="&amp;emsp;&amp;emsp;最近从老师那里搞到了一个Jason nano开发板，本来里面有一个系统，然而断电导致系统文件损坏，使得系统无法正常启动，无限重启，我从各个网站看到的教程都不太行，只能把sd卡拔下来，重刷一遍系统，把里面的深度学习环境配置一下，中间遇到了很多坑，写个blog记录一下~">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/nano1/1.PNG">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/nano1/2.PNG">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/nano1/3.png">
 <meta property="article:published_time" content="2020-10-09T15:25:22.000Z">
-<meta property="article:modified_time" content="2020-10-09T15:32:58.496Z">
+<meta property="article:modified_time" content="2020-10-11T15:03:16.008Z">
 <meta property="article:author" content="clever_bobo">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="实践">
 <meta property="article:tag" content="Jason_nano">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cleverbobo.github.io/2020/10/09/nano1/1.PNG">
 
 <link rel="canonical" href="http://cleverbobo.github.io/2020/10/09/nano1/">
 
@@ -48,7 +52,7 @@
   };
 </script>
 
-  <title>Jason nano平台深度学习环境配置 | 米奇妙妙屋</title>
+  <title>Jetson nano平台深度学习环境配置 | 米奇妙妙屋</title>
   
 
 
@@ -217,7 +221,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Jason nano平台深度学习环境配置
+          Jetson nano平台深度学习环境配置
         </h1>
 
         <div class="post-meta">
@@ -226,10 +230,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-09 23:25:22 / 修改时间：23:32:58" itemprop="dateCreated datePublished" datetime="2020-10-09T23:25:22+08:00">2020-10-09</time>
+              <time title="创建时间：2020-10-09 23:25:22" itemprop="dateCreated datePublished" datetime="2020-10-09T23:25:22+08:00">2020-10-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-11 23:03:16" itemprop="dateModified" datetime="2020-10-11T23:03:16+08:00">2020-10-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -241,7 +251,7 @@
             </span>
 
           
-            <span id="/2020/10/09/nano1/" class="post-meta-item leancloud_visitors" data-flag-title="Jason nano平台深度学习环境配置" title="阅读次数">
+            <span id="/2020/10/09/nano1/" class="post-meta-item leancloud_visitors" data-flag-title="Jetson nano平台深度学习环境配置" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -273,6 +283,24 @@
 
       
         <p>&emsp;&emsp;最近从老师那里搞到了一个Jason nano开发板，本来里面有一个系统，然而断电导致系统文件损坏，使得系统无法正常启动，无限重启，我从各个网站看到的教程都不太行，只能把sd卡拔下来，重刷一遍系统，把里面的深度学习环境配置一下，中间遇到了很多坑，写个blog记录一下~</p>
+<a id="more"></a>
+<h2 id="烧写镜像系统"><a href="#烧写镜像系统" class="headerlink" title="烧写镜像系统"></a>烧写镜像系统</h2><p>参考网站：<a target="_blank" rel="noopener" href="https://blog.csdn.net/beckhans/article/details/89136269?biz_id=102&amp;utm_term=jetson%20nano&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-89136269&amp;spm=1018.2118.3001.4187">玩转Jetson Nano（一）烧写系统</a><br>&emsp;&emsp;Jetson nano开发板是基于arm64架构，其源文件，镜像等文件与其他略有所不同，请大家注意！首先，需要烧写系统，需要的材料：</p>
+<ol>
+<li>电源线</li>
+<li>SD卡，最低需要32G，但是越大越好，谁不喜欢大的呢？</li>
+<li>Jetson nano开发板</li>
+<li>无线网卡或者网线，个人推荐使用无线网卡，方便使用，但是无线网卡一般开发板不带，需要自己安装。</li>
+<li>鼠标、键盘 </li>
+<li>HDMI线，显示器</li>
+</ol>
+<p>安装系统大致需要上面那些东西，材料准备好就可以烧录系统了。</p>
+<h3 id="下载镜像文件"><a href="#下载镜像文件" class="headerlink" title="下载镜像文件"></a>下载镜像文件</h3><p>英伟达官方地址：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image">https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image</a><br>这个包大小大概在6G大小，下载时需要耐心等待~</p>
+<h3 id="格式化SD卡"><a href="#格式化SD卡" class="headerlink" title="格式化SD卡"></a>格式化SD卡</h3><p>&emsp;&emsp;使用SD Card Formatter格式化SD卡，这个工具哪都有，百度一下下载一个，为方便使用，我把我下载的压缩包链接放上来吧<br>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1SJWX9rpTmrZ4vrpDURtH0A">https://pan.baidu.com/s/1SJWX9rpTmrZ4vrpDURtH0A</a>   提取码：x9dk<br><img src="/2020/10/09/nano1/1.PNG" alt></p>
+<p>傻瓜式操作，选择快速格式化，点击格式化即可</p>
+<h3 id="烧写镜像"><a href="#烧写镜像" class="headerlink" title="烧写镜像"></a>烧写镜像</h3><p>&emsp;&emsp;Jetson nano推荐使用Etcher写入镜像，大概40分钟，但是具体时间还要看各自的CPU，静静等待镜像写入完毕即可，该软件的官方下载地址：<a target="_blank" rel="noopener" href="https://www.balena.io/etcher/">https://www.balena.io/etcher/</a><br>&emsp;&emsp;我的云盘链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/10pZZxllhLqPACCUErsl6ag">https://pan.baidu.com/s/10pZZxllhLqPACCUErsl6ag</a>  提取码：h4h2<br><img src="/2020/10/09/nano1/2.PNG" alt><br>选择镜像，烧写系统，等待~</p>
+<h3 id="启动Jetson-nano开发板"><a href="#启动Jetson-nano开发板" class="headerlink" title="启动Jetson nano开发板"></a>启动Jetson nano开发板</h3><p>将SD卡插入Jetson Nano,开机，完成一些设置，时区，语言，输入法什么的，就不截图了，看见下图，大功告成<br><img src="/2020/10/09/nano1/3.png" alt></p>
+<p>这样开发板的基本环境就配置的差不多了，下面来介绍一下如何<strong>对系统进行配置</strong></p>
+<h2 id="设置中文页面"><a href="#设置中文页面" class="headerlink" title="设置中文页面"></a>设置中文页面</h2><p>留坑中~</p>
 
     </div>
 
@@ -308,7 +336,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://cleverbobo.github.io/2020/10/09/nano1/" title="Jason nano平台深度学习环境配置">http://cleverbobo.github.io/2020/10/09/nano1/</a>
+    <a href="http://cleverbobo.github.io/2020/10/09/nano1/" title="Jetson nano平台深度学习环境配置">http://cleverbobo.github.io/2020/10/09/nano1/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -393,6 +421,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%83%A7%E5%86%99%E9%95%9C%E5%83%8F%E7%B3%BB%E7%BB%9F"><span class="nav-number">1.</span> <span class="nav-text">烧写镜像系统</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E9%95%9C%E5%83%8F%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">下载镜像文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%BC%E5%BC%8F%E5%8C%96SD%E5%8D%A1"><span class="nav-number">1.2.</span> <span class="nav-text">格式化SD卡</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%83%A7%E5%86%99%E9%95%9C%E5%83%8F"><span class="nav-number">1.3.</span> <span class="nav-text">烧写镜像</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8Jetson-nano%E5%BC%80%E5%8F%91%E6%9D%BF"><span class="nav-number">1.4.</span> <span class="nav-text">启动Jetson nano开发板</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%AD%E6%96%87%E9%A1%B5%E9%9D%A2"><span class="nav-number">2.</span> <span class="nav-text">设置中文页面</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
