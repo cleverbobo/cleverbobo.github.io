@@ -689,6 +689,7 @@ x=A^{+} b
 <li>局域网</li>
 </ol>
 <p>ps：上述材料是我在安装时用到的，可以因人而异</p>
+<a id="more"></a>
 <h3 id="synergy工具下载"><a href="#synergy工具下载" class="headerlink" title="synergy工具下载"></a>synergy工具下载</h3><p>链接：<a href="https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w">https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w</a><br>提取码：mhwc </p>
 <h3 id="安装synergy"><a href="#安装synergy" class="headerlink" title="安装synergy"></a>安装synergy</h3><h4 id="Windows10安装"><a href="#Windows10安装" class="headerlink" title="Windows10安装"></a>Windows10安装</h4><p>以管理员权限运行安装包（msi）文件，按照操作运行即可。</p>
 <h4 id="linux安装"><a href="#linux安装" class="headerlink" title="linux安装"></a>linux安装</h4><p>以ubtuntu20.04为例</p>
