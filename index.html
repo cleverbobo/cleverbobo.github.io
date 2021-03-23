@@ -204,6 +204,145 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cleverbobo.github.io/2021/03/23/%E5%85%B1%E4%BA%AB%E9%BC%A0%E6%A0%87/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="clever_bobo">
+      <meta itemprop="description" content="Sow nothing, reap nothing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="米奇妙妙屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2021/03/23/%E5%85%B1%E4%BA%AB%E9%BC%A0%E6%A0%87/" class="post-title-link" itemprop="url">共享鼠标</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2021-03-23 18:57:09 / 修改时间：18:59:21" itemprop="dateCreated datePublished" datetime="2021-03-23T18:57:09+08:00">2021-03-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/note/" itemprop="url" rel="index"><span itemprop="name">note</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2021/03/23/%E5%85%B1%E4%BA%AB%E9%BC%A0%E6%A0%87/" class="post-meta-item leancloud_visitors" data-flag-title="共享鼠标" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2021/03/23/%E5%85%B1%E4%BA%AB%E9%BC%A0%E6%A0%87/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2021/03/23/%E5%85%B1%E4%BA%AB%E9%BC%A0%E6%A0%87/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h3><ol>
+<li>一套鼠标、键盘</li>
+<li>一台装有win10的笔记本</li>
+<li>一台装有ubtuntu的笔记本</li>
+<li>局域网</li>
+</ol>
+<p>ps：上述材料是我在安装时用到的，可以因人而异</p>
+<h3 id="synergy工具下载"><a href="#synergy工具下载" class="headerlink" title="synergy工具下载"></a>synergy工具下载</h3><p>链接：<a target="_blank" rel="noopener" href="https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w">https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w</a><br>提取码：mhwc </p>
+<h3 id="安装synergy"><a href="#安装synergy" class="headerlink" title="安装synergy"></a>安装synergy</h3><h4 id="Windows10安装"><a href="#Windows10安装" class="headerlink" title="Windows10安装"></a>Windows10安装</h4><p>以管理员权限运行安装包（msi）文件，按照操作运行即可。</p>
+<h4 id="linux安装"><a href="#linux安装" class="headerlink" title="linux安装"></a>linux安装</h4><p>以ubtuntu20.04为例</p>
+<ol>
+<li>换源，更改镜像源文件’sudo gedit /etc/apt/sources.list’为清华镜像源文件</li>
+<li>添加必要的镜像源<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo add-apt-repository ppa:rock-core&#x2F;qt4</span><br><span class="line">sudo add-apt-repository ppa:xapienz&#x2F;curl34</span><br></pre></td></tr></table></figure></li>
+<li>更新镜像源<code>sudo apt update</code></li>
+<li>更新软件<code>sudo apt upgrade</code>，这一步可以跳过，</li>
+<li>打开到对应安装包的目录或者指定文件的绝对路径，输入以下指令：<code>sudo dpkg -i synergy-v1.8.8-stable-Linux-x86_64.deb</code></li>
+<li>打开synergy，直接在客户端输入<code>synergy</code>即可</li>
+</ol>
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><ol>
+<li><p>windows端选择作为服务器，在编辑/设置里为该屏幕设置一个名字，例如”windows10-bobo”,然后再设置服务端，根据实际情况设置，然后点击启动。</p>
+</li>
+<li><p>ubtuntu端选择作为客户端，同样设置好名字，例如”ubtuntu20.04-bobo”,注意这个名字要与客户端对应的位置要一致，然后启动即可。</p>
+</li>
+</ol>
+<h3 id="报错提示"><a href="#报错提示" class="headerlink" title="报错提示"></a>报错提示</h3><ol>
+<li><p>缺少依赖项，使用apt-get下载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install  libqt4-dbus libqtcore4 libqtgui4  libqt4-network  libqt4-opengl libqtcore4 libqtgui4</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Ubuntu中使用Synergy出现 ERROR: failed to connect secure socket的问题</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">gedit ~&#x2F;.config&#x2F;Synergy&#x2F;Synergy.conf</span><br><span class="line">将</span><br><span class="line">[General]</span><br><span class="line">cryptoEnabled&#x3D;true</span><br><span class="line">改成</span><br><span class="line">cryptoEnabled&#x3D;false</span><br><span class="line">注： ps -aux |grep synergy 查看是否关闭在重启打开</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>提示Failed to load module “canberra-gtk-module”，则在终端输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libcanberra-gtk-module</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>出现system tray is unavailable, don’t close your window警示窗口,则在终端输入以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install sni-qt</span><br></pre></td></tr></table></figure>
+<p>重启后生效，但是我的版本是ubtuntu20.04好像没办法找到对应的包！还没找到解决办法</p>
+</li>
+<li><p>最好在同一个局域网下启动，不是同一个局域网可能需要做穿透，但是不是一个局域网里应该就不用了这个了</p>
+</li>
+<li><p>更换网络后，ubtuntu端客户端无法正常启动，可能是因为已经存在一个synergy在运行了，尝试reboot，或者kill这个进程然后重新设置！</p>
+</li>
+<li><p>目前还没添加开机自启动功能，因为感觉不太不需要，日后需要再添加</p>
+</li>
+</ol>
+<h3 id="参考网站："><a href="#参考网站：" class="headerlink" title="参考网站："></a>参考网站：</h3><p><a target="_blank" rel="noopener" href="https://post.smzdm.com/p/ag824qq7/">https://post.smzdm.com/p/ag824qq7/</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/pblearning/article/details/101278721">https://blog.csdn.net/pblearning/article/details/101278721</a></p>
+<p><a target="_blank" rel="noopener" href="https://launchpad.net/~xapienz/+archive/ubuntu/curl34">https://launchpad.net/~xapienz/+archive/ubuntu/curl34</a></p>
+<p>还有一些参考网站不记得了，有问题百度百度吧</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cleverbobo.github.io/2021/03/23/%E5%BF%AB%E9%80%9Fgit%E6%96%87%E4%BB%B6/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -229,7 +368,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2021-03-23 18:51:23 / 修改时间：18:55:08" itemprop="dateCreated datePublished" datetime="2021-03-23T18:51:23+08:00">2021-03-23</time>
+              <time title="创建时间：2021-03-23 18:51:23 / 修改时间：18:56:44" itemprop="dateCreated datePublished" datetime="2021-03-23T18:51:23+08:00">2021-03-23</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -274,10 +413,15 @@
 
       
           <h2 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h2><p>只需要将www.github.com/改为www.github.com.cnpmjs.org/就可以实现一键式加速<br>举个例子：<br>比如原地址是“<a target="_blank" rel="noopener" href="https://github.com/996icu/996.ICU.git”">https://github.com/996icu/996.ICU.git”</a><br>改成“<a target="_blank" rel="noopener" href="https://github.com.cnpmjs.org/996icu/996.ICU.git”便可搞定！">https://github.com.cnpmjs.org/996icu/996.ICU.git”便可搞定！</a></p>
-<p>非常简单，但是亲测有效！速度大概能到达800kb/s！</p>
-<h2 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h2><p>1.打开网站<a target="_blank" rel="noopener" href="https://www.ipaddress.com/">https://www.ipaddress.com/</a><br>2.搜索以下网址的ip地址：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">github.global.ssl.fastly.net</span><br><span class="line">github.com</span><br></pre></td></tr></table></figure><br>3.修改hosts文件<br>windows目录在 C:\Windows\System32\drivers\etc\hosts<br>mac目录在：/etc/hosts<br>linux目录在：/etc/hosts<br>需要使用对应的管理员权限打开，添加以下内容，以你查询到的ip地址为基准<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">199.232.69.194 github.global-ssl.fastly.net</span><br><span class="line">140.82.112.3 github.com </span><br></pre></td></tr></table></figure><br>实际测试，速度有所提升，但是效果一般，应该因人而异，我测试时，达到30kb/s</p>
-<h2 id="第三种方法"><a href="#第三种方法" class="headerlink" title="第三种方法"></a>第三种方法</h2><p>使用ss代理，鉴于大部分人都没有这个资源（包括我自己），所以暂时先不说了，以后做了再说</p>
-
+<p>非常简单，但是亲测有效！速度大概能到达800kb/s！<br></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/03/23/%E5%BF%AB%E9%80%9Fgit%E6%96%87%E4%BB%B6/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1044,95 +1188,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://cleverbobo.github.io/2020/10/09/VAEs/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/head.jpg">
-      <meta itemprop="name" content="clever_bobo">
-      <meta itemprop="description" content="Sow nothing, reap nothing">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="米奇妙妙屋">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/10/09/VAEs/" class="post-title-link" itemprop="url">变分自编码器(待更新)</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
-
-              <time title="创建时间：2020-10-09 23:18:12 / 修改时间：23:19:15" itemprop="dateCreated datePublished" datetime="2020-10-09T23:18:12+08:00">2020-10-09</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2020/10/09/VAEs/" class="post-meta-item leancloud_visitors" data-flag-title="变分自编码器(待更新)" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-  
-  <span class="post-meta-item">
-    
-      <span class="post-meta-item-icon">
-        <i class="far fa-comment"></i>
-      </span>
-      <span class="post-meta-item-text">Valine：</span>
-    
-    <a title="valine" href="/2020/10/09/VAEs/#valine-comments" itemprop="discussionUrl">
-      <span class="post-comments-count valine-comment-count" data-xid="/2020/10/09/VAEs/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>暂时不想更新，先留个坑，不定期会补上~</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1204,7 +1259,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
