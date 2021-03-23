@@ -680,6 +680,21 @@ x=A^{+} b
       </tags>
   </entry>
   <entry>
+    <title>快速git文件</title>
+    <url>/2021/03/23/%E5%BF%AB%E9%80%9Fgit%E6%96%87%E4%BB%B6/</url>
+    <content><![CDATA[<h2 id="第一种方法"><a href="#第一种方法" class="headerlink" title="第一种方法"></a>第一种方法</h2><p>只需要将www.github.com/改为www.github.com.cnpmjs.org/就可以实现一键式加速<br>举个例子：<br>比如原地址是“<a href="https://github.com/996icu/996.ICU.git”">https://github.com/996icu/996.ICU.git”</a><br>改成“<a href="https://github.com.cnpmjs.org/996icu/996.ICU.git”便可搞定！">https://github.com.cnpmjs.org/996icu/996.ICU.git”便可搞定！</a></p>
+<p>非常简单，但是亲测有效！速度大概能到达800kb/s！</p>
+<h2 id="第二种方法"><a href="#第二种方法" class="headerlink" title="第二种方法"></a>第二种方法</h2><p>1.打开网站<a href="https://www.ipaddress.com/">https://www.ipaddress.com/</a><br>2.搜索以下网址的ip地址：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">github.global.ssl.fastly.net</span><br><span class="line">github.com</span><br></pre></td></tr></table></figure><br>3.修改hosts文件<br>windows目录在 C:\Windows\System32\drivers\etc\hosts<br>mac目录在：/etc/hosts<br>linux目录在：/etc/hosts<br>需要使用对应的管理员权限打开，添加以下内容，以你查询到的ip地址为基准<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">199.232.69.194 github.global-ssl.fastly.net</span><br><span class="line">140.82.112.3 github.com </span><br></pre></td></tr></table></figure><br>实际测试，速度有所提升，但是效果一般，应该因人而异，我测试时，达到30kb/s</p>
+<h2 id="第三种方法"><a href="#第三种方法" class="headerlink" title="第三种方法"></a>第三种方法</h2><p>使用ss代理，鉴于大部分人都没有这个资源（包括我自己），所以暂时先不说了，以后做了再说</p>
+]]></content>
+      <categories>
+        <category>note</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>深度学习中的正则化</title>
     <url>/2020/11/19/Regularization/</url>
     <content><![CDATA[<h2 id="正则化的定义"><a href="#正则化的定义" class="headerlink" title="正则化的定义"></a>正则化的定义</h2><p>&emsp;&emsp;首先，我们来简单认识一下什么是正则化。对于机器学习的算法，我们要尽可能的降低训练的错误率，而对于深度学习而言，只要给予足够多的神经元，理论上错误率可以达到无穷小，但是同时也会带来严重的问题，就是过拟合！因此，我们需要采取一些手段，去尽可能的降低验证错误率（有时需要牺牲训练的错误率），这种操作一般统称为正则化~<br>&emsp;&emsp;过拟合的本质就是由于算法模型能力过于强大，将数据中的一些不重要信息（例如噪声）也学习到模型之中，使模型的泛化性降低，从而使得验证集错误率升高，因此常见的正则化方法为限制学习算法能力，当然还有一些其他的手段作为辅助，下面我来一 一介绍~<br><a id="more"></a></p>
