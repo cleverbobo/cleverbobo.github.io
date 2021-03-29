@@ -201,6 +201,36 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
       </tags>
   </entry>
   <entry>
+    <title>frp内网穿透</title>
+    <url>/2021/03/29/frp%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F/</url>
+    <content><![CDATA[<h3 id="内网穿透介绍"><a href="#内网穿透介绍" class="headerlink" title="内网穿透介绍"></a>内网穿透介绍</h3><p>摘自百度百科</p>
+<blockquote>
+<p>&emsp;&emsp;内网穿透，也即 NAT 穿透，进行 NAT 穿透是为了使具有某一个特定源 IP 地址和源端口号的数据包不被 NAT 设备屏蔽而正确路由到内网主机。下面就相互通信的主机在网络中与 NAT 设备的相对位置介绍内网穿透方法。<br>&emsp;&emsp;UDP 内网穿透的实质是利用路由器上的NAT 系统。NAT 是一种将私有（保留）地址转化为合法IP地址的转换技术，它被广泛应用于各种类型 Internet 接入方式和各种类型的网络中。NAT可以完成重用地址，并且对于内部的网络结构可以实现对外隐蔽。</p>
+</blockquote>
+<p>简单的拿游戏来说，就是即使不在同一个局域网下，大家也可以联机一起玩！</p>
+<a id="more"></a>
+<h3 id="准备工具"><a href="#准备工具" class="headerlink" title="准备工具"></a>准备工具</h3><ol>
+<li>一台云服务器（阿里，腾讯均可，建议选择国内）</li>
+<li>需要内网穿透的机器</li>
+<li>局域网</li>
+</ol>
+<h3 id="正式安装"><a href="#正式安装" class="headerlink" title="正式安装"></a>正式安装</h3><h4 id="服务器端安装"><a href="#服务器端安装" class="headerlink" title="服务器端安装"></a>服务器端安装</h4><p>一、下载frp<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wget https://github.com/fatedier/frp/releases/download/v0.21.0/frp_0.21.0_linux_amd64.tar.gz</span><br><span class="line">tar  -zxvf frp_0.21.0_linux_amd64.tar.gz <span class="comment">#解压</span></span><br></pre></td></tr></table></figure><br>可以自己选择合适个版本安装，解压到合适的目录</p>
+<p>二、配置frp的配置文件<br>服务器端的配置文件是frps开头的，客户端是frpc开头的，删除掉多余文件<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">rm -rf frpc*</span><br></pre></td></tr></table></figure><br>修改服务端配置文件<code>vim frps.ini</code><br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line">bind_port = 7000</span><br></pre></td></tr></table></figure><br>一般是默认的上面的配置，不需要更改</p>
+<h4 id="客户端安装"><a href="#客户端安装" class="headerlink" title="客户端安装"></a>客户端安装</h4><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">[common]</span><br><span class="line">server_addr = xxx.xxx.xxx.xxx   <span class="comment">#frp服务端地址，必须是公网ip或者域名，这里假设为xxx.xxx.xxx.xxx</span></span><br><span class="line">server_port = 7000      <span class="comment">#frp服务端端口，即填写服务端配置中的 bind_port</span></span><br><span class="line"></span><br><span class="line">[ssh]</span><br><span class="line"><span class="built_in">type</span> = tcp              <span class="comment">#连接类型，填tcp或udp</span></span><br><span class="line">local_ip = 127.0.0.1    <span class="comment">#填127.0.0.1或内网ip都可以</span></span><br><span class="line">local_port = 22         <span class="comment">#需要转发到的端口，ssh端口是22</span></span><br><span class="line">remote_port = 6000      <span class="comment">#frp服务端的远程监听端口，即你访问服务端的remote_port就相当于访</span></span><br><span class="line">                        <span class="comment">#问客户端的 local_port，如果填0则会随机分配一个端口</span></span><br></pre></td></tr></table></figure>
+<p><strong>非常重要的一点，必须要在阿里服务器上面将6000、7000的端口打开，否则ssh连接会被拒绝！</strong></p>
+<h3 id="启动frp穿透服务"><a href="#启动frp穿透服务" class="headerlink" title="启动frp穿透服务"></a>启动frp穿透服务</h3><p>服务端 ：<code>screen ./frps -c frps.ini</code><br>客户端 ：<code>screen ./frpc -c frpc.ini</code></p>
+<p>个人习惯，一般使用screen后台启动程序，nohup也可以，推荐后台启动，不然终端掉了，frp服务就没了</p>
+<h4 id="登录"><a href="#登录" class="headerlink" title="登录"></a>登录</h4><p>使用ssh远程登录，ip地址选择服务器地址或者域名，端口号选择6000，输入用户名和密码就可以远程登录了！</p>
+<h3 id="多个内网设备配置"><a href="#多个内网设备配置" class="headerlink" title="多个内网设备配置"></a>多个内网设备配置</h3><p>对于不同的设备，需做不同的配置，避免出现冲突：<br><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 内网机器1：</span></span><br><span class="line">[ssh]                      <span class="comment">#&lt;==不同点</span></span><br><span class="line"><span class="built_in">type</span> = tcp </span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 22</span><br><span class="line">remote_port = 6000         <span class="comment">#&lt;==不同点</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 内网机器2：</span></span><br><span class="line">[ssh1]                     <span class="comment">#&lt;==不同点</span></span><br><span class="line"><span class="built_in">type</span> = tcp </span><br><span class="line">local_ip = 127.0.0.1</span><br><span class="line">local_port = 22</span><br><span class="line">remote_port = 6001         <span class="comment">#&lt;==不同点</span></span><br></pre></td></tr></table></figure><br>另外，可以在客户端添加一个开机自启动程序，大家自行百度吧，这里就不介绍了</p>
+]]></content>
+      <categories>
+        <category>note</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>图卷积神经网络(待更新)</title>
     <url>/2020/10/09/gcn/</url>
     <content><![CDATA[<p>暂时不想更新，先留个坑位，以后看心情更新~</p>

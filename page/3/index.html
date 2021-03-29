@@ -204,6 +204,109 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://cleverbobo.github.io/2020/08/28/sgd/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/head.jpg">
+      <meta itemprop="name" content="clever_bobo">
+      <meta itemprop="description" content="Sow nothing, reap nothing">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="米奇妙妙屋">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/08/28/sgd/" class="post-title-link" itemprop="url">通俗理解梯度下降法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-28 18:36:58" itemprop="dateCreated datePublished" datetime="2020-08-28T18:36:58+08:00">2020-08-28</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-30 22:01:07" itemprop="dateModified" datetime="2020-08-30T22:01:07+08:00">2020-08-30</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/28/sgd/" class="post-meta-item leancloud_visitors" data-flag-title="通俗理解梯度下降法" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/28/sgd/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/28/sgd/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>机器学习的本质就是模型+优化，本篇blog主要是简单介绍一种优化算法——梯度下降法。相比于其他的优化算法，该算法的适用性较高，尤其在深度网络的学习中，主流的优化算法就是梯度下降法。虽然说该方法适用性高，但是仍有一定的局限性，比如对于非凸函数收敛于局部最小，梯度消失，梯度爆炸等问题，但总的来说该算法的应用还是十分广泛的。</p>
+<h2 id="场景假设"><a href="#场景假设" class="headerlink" title="场景假设"></a>场景假设</h2><p>&emsp;&emsp;首先，我们先假设一个场景：一个人被放在山上，现在他想找到一条下山的路到达山脚，但是这个人没有地图，也不知道所处位置和方向。另外山上还起了大雾，导致能见度很低，因此没有办法直接找到一条合适的路径，只能自己一步步摸索，那么这个时候，便可利用梯度下降算法来帮助自己下山。<br><img src="/2020/08/28/sgd/1.jpg" alt><br>&emsp;&emsp;具体怎么做呢，首先以他当前的所处的位置为基准，寻找这个位置最陡峭的地方，然后朝着下降方向走一步，然后又继续以当前位置为基准，再找最陡峭的地方，再走直到最后到达最低处。虽然这么走不一定是最短路径，但是每一步都能保证自己离山脚更进一步，这就是梯度下降法的核心：一步步慢慢的靠近最小值点，不一定最快，但一定有效。那么一定会有同学问了，如果我想找到f(x)的最高点怎么办？同样，我们可以利用梯度下降的方法找-f(x)最小点即可。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/08/28/sgd/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://cleverbobo.github.io/2020/08/28/svd-program/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -778,7 +881,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
