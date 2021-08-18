@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Common commands</title>
+    <url>/2021/08/18/Common-commands/</url>
+    <content><![CDATA[<h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><ol>
+<li><p>字符串反转</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s1=<span class="string">&quot;&quot;</span>.join((<span class="keyword">lambda</span> x:(x.sort(),x)[<span class="number">1</span>])(list(s)))</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表反转</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s1=s[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h4><h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4>]]></content>
+      <categories>
+        <category>note</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>生成式对抗神经网络(待更新)</title>
     <url>/2020/10/09/GAN/</url>
     <content><![CDATA[<p>最近不想更新，暂时留个坑，以后更新~</p>
@@ -262,8 +281,8 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
         <category>note</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>笔记</tag>
+        <tag>机器学习</tag>
         <tag>python</tag>
       </tags>
   </entry>
@@ -280,8 +299,8 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
         <category>note</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>笔记</tag>
+        <tag>机器学习</tag>
         <tag>python</tag>
       </tags>
   </entry>
@@ -720,7 +739,8 @@ x=A^{+} b
 </ol>
 <p>ps：上述材料是我在安装时用到的，可以因人而异</p>
 <a id="more"></a>
-<h3 id="synergy工具下载"><a href="#synergy工具下载" class="headerlink" title="synergy工具下载"></a>synergy工具下载</h3><p>链接：<a href="https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w">https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w</a><br>提取码：mhwc </p>
+<h3 id="synergy工具下载"><a href="#synergy工具下载" class="headerlink" title="synergy工具下载"></a>synergy工具下载</h3><h5 id="第一种-百度云"><a href="#第一种-百度云" class="headerlink" title="第一种 百度云"></a>第一种 百度云</h5><p>链接：<a href="https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w">https://pan.baidu.com/s/1AKLdK_paga-w2oTpT2yg4w</a><br>提取码：mhwc </p>
+<h4 id="第二种-github仓库"><a href="#第二种-github仓库" class="headerlink" title="第二种 github仓库"></a>第二种 github仓库</h4><p>链接：</p>
 <h3 id="安装synergy"><a href="#安装synergy" class="headerlink" title="安装synergy"></a>安装synergy</h3><h4 id="Windows10安装"><a href="#Windows10安装" class="headerlink" title="Windows10安装"></a>Windows10安装</h4><p>以管理员权限运行安装包（msi）文件，按照操作运行即可。</p>
 <h4 id="linux安装"><a href="#linux安装" class="headerlink" title="linux安装"></a>linux安装</h4><p>以ubtuntu20.04为例</p>
 <ol>
@@ -878,8 +898,8 @@ J_{\text {新 }}(w)=J_{\text {旧 }}(w)+\alpha \Omega(h)</script><p>&emsp;&emsp;
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
         <tag>笔记</tag>
+        <tag>机器学习</tag>
         <tag>优化算法</tag>
       </tags>
   </entry>
