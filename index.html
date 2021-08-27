@@ -218,7 +218,7 @@
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
           
-            <a href="/2021/08/18/Common-commands/" class="post-title-link" itemprop="url">Common commands</a>
+            <a href="/2021/08/18/Common-commands/" class="post-title-link" itemprop="url">常用命令集合</a>
         </h2>
 
         <div class="post-meta">
@@ -227,10 +227,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2021-08-18 10:29:41 / 修改时间：10:35:16" itemprop="dateCreated datePublished" datetime="2021-08-18T10:29:41+08:00">2021-08-18</time>
+              <time title="创建时间：2021-08-18 10:29:41" itemprop="dateCreated datePublished" datetime="2021-08-18T10:29:41+08:00">2021-08-18</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2021-08-27 15:55:02" itemprop="dateModified" datetime="2021-08-27T15:55:02+08:00">2021-08-27</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -242,7 +248,7 @@
             </span>
 
           
-            <span id="/2021/08/18/Common-commands/" class="post-meta-item leancloud_visitors" data-flag-title="Common commands" title="阅读次数">
+            <span id="/2021/08/18/Common-commands/" class="post-meta-item leancloud_visitors" data-flag-title="常用命令集合" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -275,13 +281,26 @@
       
           <h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><ol>
 <li><p>字符串反转</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1=<span class="string">&quot;&quot;</span>.join((<span class="keyword">lambda</span> x:(x.sort(),x)[<span class="number">1</span>])(list(s)))</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s1=<span class="string">&quot;&quot;</span>.join((<span class="keyword">lambda</span> x:(x.sort(),x)[<span class="number">1</span>])(list(s)))</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">s1=s1[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>列表反转</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s1=s[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
 </li>
+<li><p>求字典前n个最大值对应的键</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> nlargest(k,hashmap,key=<span class="keyword">lambda</span> k:hashmap[k])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找当前目录的根目录，子目录以及文件信息</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> root,dirs,files <span class="keyword">in</span> os.walk(dir_name):</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
-<h4 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h4><h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4>
+<h4 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h4><ol>
+<li><p>增加GPU利用率，尽量保证batch_size将GPU显存占满，但是过大的batchsize可能会导致模型不稳定</p>
+</li>
+<li><p>增加cpu读取数据的线程,num_workers可以选择4,8,16，使能pin_memory，增加GPU利用率</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=args.bs, shuffle=<span class="literal">False</span>,num_workers=<span class="number">4</span>,pin_memory=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4>
       
     </div>
 
