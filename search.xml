@@ -25,7 +25,18 @@
 </li>
 </ol>
 <h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4><h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h4><ol>
-<li>查看英伟达显卡利用率<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure></li>
+<li><p>查看英伟达显卡利用率</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后台不挂断运行，输出当前进程的pid</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nohup <span class="built_in">command</span> &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭进程</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 pid</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看进程</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">jobs</span> -l</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 ]]></content>
       <categories>
