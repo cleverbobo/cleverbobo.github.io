@@ -24,7 +24,10 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=args.bs, shuffle=<span class="literal">False</span>,num_workers=<span class="number">4</span>,pin_memory=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
 </li>
 </ol>
-<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4>]]></content>
+<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4><h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h4><ol>
+<li>查看英伟达显卡利用率<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
       <categories>
         <category>note</category>
       </categories>
