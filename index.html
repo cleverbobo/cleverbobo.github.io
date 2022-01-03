@@ -140,11 +140,6 @@
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
 
   </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>机电硕20-5相关通知</a>
-
-  </li>
         <li class="menu-item menu-item-music">
 
     <a href="/music/" rel="section"><i class="fa fa-music fa-fw"></i>吉他曲</a>
@@ -235,7 +230,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-09-01 16:47:30" itemprop="dateModified" datetime="2021-09-01T16:47:30+08:00">2021-09-01</time>
+                <time title="修改时间：2022-01-03 17:30:01" itemprop="dateModified" datetime="2022-01-03T17:30:01+08:00">2022-01-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -292,29 +287,16 @@
 <li><p>查找当前目录的根目录，子目录以及文件信息</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> root,dirs,files <span class="keyword">in</span> os.walk(dir_name):</span><br></pre></td></tr></table></figure>
 </li>
-</ol>
-<h4 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h4><ol>
-<li><p>增加GPU利用率，尽量保证batch_size将GPU显存占满，但是过大的batchsize可能会导致模型不稳定</p>
-</li>
-<li><p>增加cpu读取数据的线程,num_workers可以选择4,8,16，使能pin_memory，增加GPU利用率</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=args.bs, shuffle=<span class="literal">False</span>,num_workers=<span class="number">4</span>,pin_memory=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4><h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h4><ol>
-<li><p>查看英伟达显卡利用率</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>后台不挂断运行，输出当前进程的pid</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nohup <span class="built_in">command</span> &amp;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>关闭进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 pid</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看进程</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">jobs</span> -l</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-
+<li><p>退出程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sys.exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure></li></ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2021/08/18/Common-commands/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -1279,7 +1261,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1313,7 +1295,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://www.mereith.com/" title="https:&#x2F;&#x2F;www.mereith.com&#x2F;" rel="noopener" target="_blank">1.王璐</a>
+          <a href="https://www.mereith.com/" title="https:&#x2F;&#x2F;www.mereith.com&#x2F;" rel="noopener" target="_blank">1.前端大能的blog</a>
         </li>
         <li class="links-of-blogroll-item">
           <a href="https://keras-cn.readthedocs.io/en/latest/" title="https:&#x2F;&#x2F;keras-cn.readthedocs.io&#x2F;en&#x2F;latest&#x2F;" rel="noopener" target="_blank">2.keras中文文档</a>
@@ -1340,7 +1322,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

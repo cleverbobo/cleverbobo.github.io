@@ -1,52 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>常用命令集合</title>
-    <url>/2021/08/18/Common-commands/</url>
-    <content><![CDATA[<h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><ol>
-<li><p>字符串反转</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s1=<span class="string">&quot;&quot;</span>.join((<span class="keyword">lambda</span> x:(x.sort(),x)[<span class="number">1</span>])(list(s)))</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">s1=s1[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>列表反转</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s1=s[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>求字典前n个最大值对应的键</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> nlargest(k,hashmap,key=<span class="keyword">lambda</span> k:hashmap[k])</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查找当前目录的根目录，子目录以及文件信息</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> root,dirs,files <span class="keyword">in</span> os.walk(dir_name):</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h4><ol>
-<li><p>增加GPU利用率，尽量保证batch_size将GPU显存占满，但是过大的batchsize可能会导致模型不稳定</p>
-</li>
-<li><p>增加cpu读取数据的线程,num_workers可以选择4,8,16，使能pin_memory，增加GPU利用率</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=args.bs, shuffle=<span class="literal">False</span>,num_workers=<span class="number">4</span>,pin_memory=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4><h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h4><ol>
-<li><p>查看英伟达显卡利用率</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>后台不挂断运行，输出当前进程的pid</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nohup <span class="built_in">command</span> &amp;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>关闭进程</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 pid</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>查看进程</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">jobs</span> -l</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>note</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>生成式对抗神经网络(待更新)</title>
     <url>/2020/10/09/GAN/</url>
     <content><![CDATA[<p>最近不想更新，暂时留个坑，以后更新~</p>
@@ -118,6 +72,82 @@
         <tag>课程</tag>
         <tag>进阶</tag>
         <tag>英文论文解析</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>常用命令集合</title>
+    <url>/2021/08/18/Common-commands/</url>
+    <content><![CDATA[<h4 id="python"><a href="#python" class="headerlink" title="python"></a>python</h4><ol>
+<li><p>字符串反转</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s1=<span class="string">&quot;&quot;</span>.join((<span class="keyword">lambda</span> x:(x.sort(),x)[<span class="number">1</span>])(list(s)))</span><br><span class="line"><span class="comment"># 或者</span></span><br><span class="line">s1=s1[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>列表反转</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">s1=s[::<span class="number">-1</span>]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>求字典前n个最大值对应的键</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">return</span> nlargest(k,hashmap,key=<span class="keyword">lambda</span> k:hashmap[k])</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找当前目录的根目录，子目录以及文件信息</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">for</span> root,dirs,files <span class="keyword">in</span> os.walk(dir_name):</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>退出程序</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">sys.exit(<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="pytorch"><a href="#pytorch" class="headerlink" title="pytorch"></a>pytorch</h4></li>
+<li><p>增加GPU利用率，尽量保证batch_size将GPU显存占满，但是过大的batchsize可能会导致模型不稳定</p>
+</li>
+<li><p>增加cpu读取数据的线程,num_workers可以选择4,8,16，使能pin_memory，增加GPU利用率</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> torch.utils.data <span class="keyword">import</span> DataLoader</span><br><span class="line">train_loader = DataLoader(train_dataset, batch_size=args.bs, shuffle=<span class="literal">False</span>,num_workers=<span class="number">4</span>,pin_memory=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure></li>
+<li>构建模型，初始化<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Your_Module</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="comment"># 显示继承nn.Module的构造函数</span></span><br><span class="line">        super(Your_Module,self).__init__()</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self,x</span>):</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="C"><a href="#C" class="headerlink" title="C"></a>C</h4><h4 id="C-1"><a href="#C-1" class="headerlink" title="C++"></a>C++</h4><h4 id="ubuntu"><a href="#ubuntu" class="headerlink" title="ubuntu"></a>ubuntu</h4><ol>
+<li><p>查看英伟达显卡利用率</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nvidia-smi</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>后台不挂断运行，输出当前进程的pid</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nohup <span class="built_in">command</span> &amp;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关闭进程</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">kill</span> -9 pid</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看进程</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">jobs</span> -l</span><br><span class="line">ps -aux|grep python</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<h4 id="深度学习工程结构"><a href="#深度学习工程结构" class="headerlink" title="深度学习工程结构"></a>深度学习工程结构</h4><p>创建project目录，应包含以下几点：</p>
+<ol>
+<li>data.py 负责数据导入模块，Dataset类以及DataLoader类</li>
+<li>utils.py 模型的一些预处理以及一些常用的工具</li>
+<li>model.py 模型的核心部分，包含所有模型的子模块</li>
+<li>train.py 训练函数</li>
+<li>inference.py 测试（推断）函数</li>
+<li>csrc文件夹 放置一些C/C++编译的加速库</li>
+</ol>
+<p>如果模型比较复杂，可以考虑使用文件夹的方式而不是用单个文件</p>
+<h4 id="myblog"><a href="#myblog" class="headerlink" title="myblog"></a>myblog</h4><ol>
+<li><p>本地部署演示,默认部署ip:127.0.0.1:4000</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run start </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建新文章</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo n <span class="string">&quot;new article&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>显示部分页面</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">&lt;!--more--&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建新页面</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new page <span class="string">&quot;page name&quot;</span></span><br></pre></td></tr></table></figure>
+<p>此外，需要在主题配置文件中设置链接格式</p>
+</li>
+<li><p>远程部署</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">npm run deploy</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>note</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -308,8 +338,8 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
         <category>note</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>机器学习</tag>
+        <tag>笔记</tag>
         <tag>python</tag>
       </tags>
   </entry>
@@ -326,8 +356,8 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
         <category>note</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>机器学习</tag>
+        <tag>笔记</tag>
         <tag>python</tag>
       </tags>
   </entry>
@@ -365,17 +395,26 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
       </tags>
   </entry>
   <entry>
-    <title>长短期记忆(待更新)</title>
-    <url>/2020/10/09/lstm/</url>
-    <content><![CDATA[<p>暂时断更~</p>
+    <title>markdown进阶心得（更新中）</title>
+    <url>/2020/08/27/markdown2/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要是在编辑markdown时，遇到了很多问题，同时也找到了很多技巧，所以在这里mark一下</p>
+<h2 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h2><p>英文字符空格 <code>&amp;ensp;</code><br>中文字符空格 <code>&amp;emsp;</code><br>不断行的空白格 <code>&amp;nbsp;</code><br>其中较为常用的是<code>&amp;emsp;</code>,其效果如下：<br>&emsp;&emsp;<strong>首行缩进两字符</strong><br><a id="more"></a></p>
+<h2 id="文字居中"><a href="#文字居中" class="headerlink" title="文字居中"></a>文字居中</h2><p>文字居中使用<code>&lt;center&gt; ``&lt;/center&gt;</code>来括住文字，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;center&gt; 文字居中&lt;&#x2F;center&gt; </span><br></pre></td></tr></table></figure><br>效果展示：</p>
+<center> 文字居中</center> 
+
+<h2 id="插入公式"><a href="#插入公式" class="headerlink" title="插入公式"></a>插入公式</h2><p>参考链接：(<a href="https://www.jianshu.com/p/7ab21c7f0674">https://www.jianshu.com/p/7ab21c7f0674</a>)<br>按照参考链接里面的教程，将冲突的配置文件更改，即可在exo中渲染MathJax数学公式<br><br>但是该公式有严格的LaTeX语法，语法规则参考<a href="https://www.jianshu.com/p/25f0139637b7">《markdown中公式编辑教程》</a>,所以较为复杂，在这里推荐一种懒人方法：使用“mathpix”插件，官方的下载地址为(<a href="https://mathpix.com/)。">https://mathpix.com/)。</a><br>使用方法浅显易懂，注册账号登录，截屏选取公式，复制结果。如果是编辑公式，我们可以在word上编写或者写在纸上，用该软件转换格式，实测非常好用~</p>
+<h2 id="writage插件"><a href="#writage插件" class="headerlink" title="writage插件"></a>writage插件</h2><p>官方地址：(<a href="https://www.writage.com">https://www.writage.com</a>)<br>使用教程：(<a href="https://www.cnblogs.com/craigtaylor/p/13540170.html">https://www.cnblogs.com/craigtaylor/p/13540170.html</a>)<br>该插件可以将word文件转换为.md文件，但是经过我的实测，并不是很理想，待开发中~</p>
+<h2 id="插入pdf链接"><a href="#插入pdf链接" class="headerlink" title="插入pdf链接"></a>插入pdf链接</h2><p>安装插件<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-pdf</span><br></pre></td></tr></table></figure><br>之后就可以在新建的md文件中插入pdf链接了，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">外部链接：</span><br><span class="line">&#123;% pdf 链接地址 %&#125;</span><br><span class="line">本地连接：</span><br><span class="line">&#123;% pdf .&#x2F;pdf名字.pdf %&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用文献时，注意被引用的语句与上下段落之间空出一行</p>
+<center> <font size="12" color="#DC143C" face="黑体">未完待续~</font> </center>
+
 ]]></content>
       <categories>
-        <category>机器学习</category>
+        <category>markdown</category>
       </categories>
       <tags>
-        <tag>机器学习</tag>
-        <tag>入门</tag>
-        <tag>课程</tag>
+        <tag>进阶</tag>
+        <tag>markdown</tag>
       </tags>
   </entry>
   <entry>
@@ -420,29 +459,6 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
       </categories>
       <tags>
         <tag>入门</tag>
-        <tag>markdown</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>markdown进阶心得（更新中）</title>
-    <url>/2020/08/27/markdown2/</url>
-    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>本篇blog主要是在编辑markdown时，遇到了很多问题，同时也找到了很多技巧，所以在这里mark一下</p>
-<h2 id="首行缩进"><a href="#首行缩进" class="headerlink" title="首行缩进"></a>首行缩进</h2><p>英文字符空格 <code>&amp;ensp;</code><br>中文字符空格 <code>&amp;emsp;</code><br>不断行的空白格 <code>&amp;nbsp;</code><br>其中较为常用的是<code>&amp;emsp;</code>,其效果如下：<br>&emsp;&emsp;<strong>首行缩进两字符</strong><br><a id="more"></a></p>
-<h2 id="文字居中"><a href="#文字居中" class="headerlink" title="文字居中"></a>文字居中</h2><p>文字居中使用<code>&lt;center&gt; ``&lt;/center&gt;</code>来括住文字，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;center&gt; 文字居中&lt;&#x2F;center&gt; </span><br></pre></td></tr></table></figure><br>效果展示：</p>
-<center> 文字居中</center> 
-
-<h2 id="插入公式"><a href="#插入公式" class="headerlink" title="插入公式"></a>插入公式</h2><p>参考链接：(<a href="https://www.jianshu.com/p/7ab21c7f0674">https://www.jianshu.com/p/7ab21c7f0674</a>)<br>按照参考链接里面的教程，将冲突的配置文件更改，即可在exo中渲染MathJax数学公式<br><br>但是该公式有严格的LaTeX语法，语法规则参考<a href="https://www.jianshu.com/p/25f0139637b7">《markdown中公式编辑教程》</a>,所以较为复杂，在这里推荐一种懒人方法：使用“mathpix”插件，官方的下载地址为(<a href="https://mathpix.com/)。">https://mathpix.com/)。</a><br>使用方法浅显易懂，注册账号登录，截屏选取公式，复制结果。如果是编辑公式，我们可以在word上编写或者写在纸上，用该软件转换格式，实测非常好用~</p>
-<h2 id="writage插件"><a href="#writage插件" class="headerlink" title="writage插件"></a>writage插件</h2><p>官方地址：(<a href="https://www.writage.com">https://www.writage.com</a>)<br>使用教程：(<a href="https://www.cnblogs.com/craigtaylor/p/13540170.html">https://www.cnblogs.com/craigtaylor/p/13540170.html</a>)<br>该插件可以将word文件转换为.md文件，但是经过我的实测，并不是很理想，待开发中~</p>
-<h2 id="插入pdf链接"><a href="#插入pdf链接" class="headerlink" title="插入pdf链接"></a>插入pdf链接</h2><p>安装插件<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-pdf</span><br></pre></td></tr></table></figure><br>之后就可以在新建的md文件中插入pdf链接了，格式如下：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">外部链接：</span><br><span class="line">&#123;% pdf 链接地址 %&#125;</span><br><span class="line">本地连接：</span><br><span class="line">&#123;% pdf .&#x2F;pdf名字.pdf %&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用文献时，注意被引用的语句与上下段落之间空出一行</p>
-<center> <font size="12" color="#DC143C" face="黑体">未完待续~</font> </center>
-
-]]></content>
-      <categories>
-        <category>markdown</category>
-      </categories>
-      <tags>
-        <tag>进阶</tag>
         <tag>markdown</tag>
       </tags>
   </entry>
@@ -515,10 +531,96 @@ a t t((K, V), q)=\sum_{i=1}^{N} \alpha_{i} v_{i}=\sum_{i=1}^{N} \frac{\exp \left
       </tags>
   </entry>
   <entry>
-    <title>循环神经网络(暂时断更)</title>
+    <title>循环神经网络</title>
     <url>/2020/10/09/rnn/</url>
-    <content><![CDATA[<p>不定期更新~</p>
-]]></content>
+    <content><![CDATA[<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>&emsp;&emsp;在自然语言处理的场景下，<strong>顺序关系</strong>至关重要，比如“我请你吃饭”与“你请我吃饭”，这两句话虽然构成的单词相同，但是其表达的意义却是截然相反。目前较为火热的卷积神经网络（CNN）主要处理图片中像素值之间的空间关系，不能捕获输入的时序信息,而循环神经网络（RNN）对具有<strong>序列特性</strong>的数据非常有效，它能挖掘数据中的<strong>时序信息</strong>以及<strong>语义信息</strong>，利用了RNN的这种能力，使深度学习模型在解决语音识别、语言模型、机器翻译以及时序分析等NLP领域的问题时有所突破。</p>
+<p>&emsp;&emsp;举个简单的例子<br>&emsp;&emsp;第一句话：I like eating apple！（我喜欢吃苹果！）<br>&emsp;&emsp;第二句话：The Apple is a great company！（苹果是一家很棒的公司！）</p>
+<p>&emsp;&emsp;现在的任务是要给apple打Label，我们都知道第一个apple是一种水果，第二个apple是苹果公司，假设我们现在有大量的已经标记好的数据以供训练模型，当我们使用全连接的神经网络时，我们做法是把apple这个单词的特征向量输入到我们的模型中，在输出结果时，让我们的label里，正确的label概率最大，来训练模型，但我们的语料库中，有的apple的label是水果，有的label是公司，这将导致模型在训练的过程中，预测的准确程度取决于<strong>训练集中哪个label多一些</strong>，这样的模型对于我们来说完全没有作用。问题就出在了<strong>我们没有结合上下文去训练模型</strong>，而是单独的在训练apple这个单词的label，这也是全连接神经网络模型所不能做到的，于是就有了我们的循环神经网络。</p>
+<a id="more"></a>
+<h2 id="原理架构"><a href="#原理架构" class="headerlink" title="原理架构"></a>原理架构</h2><p><img src="/2020/10/09/rnn/1.png#pic_center" alt="图一"><br>&emsp;&emsp;如图所示，为循环神经网络的基础架构，$x_t$代表t时刻的输入（例如单词的嵌入向量）；$W$代表隐藏层的权重矩阵，该矩阵会随着输入不断更新，以便记录历史信息；$O_t$代表t时刻的输出。<br>&emsp;&emsp;RNN之所以可以解决序列问题，是因为它可以记住每一时刻的信息，<strong>每一时刻的隐藏层不仅由该时刻的输入层决定，还由上一时刻的隐藏层决定</strong>，公式如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&O_{t}=g\left(V \cdot S_{t}\right) \\
+&S_{t}=f\left(U \cdot X_{t}+W \cdot S_{t-1}\right)
+\end{aligned}</script><p>&emsp;&emsp;其中 ，$O_t$ 代表t时刻的输出；$S_t$代表t时刻的隐藏层的值,$S_t$的值不仅仅取决于$X_t$, 还取决于$S_{t-1}$；$g$、$f$对应不同的映射函数。值得注意的一点是，在整个训练过程中，每一时刻所用的都是同样的W,只不过W在<strong>不断的更新</strong></p>
+<h2 id="常见模型"><a href="#常见模型" class="headerlink" title="常见模型"></a>常见模型</h2><h3 id="基础RNN架构"><a href="#基础RNN架构" class="headerlink" title="基础RNN架构"></a>基础RNN架构</h3><p>&emsp;&emsp;在这里简单举一个例子方便理解：假设存在一个RNN，如下图所示，输入的每个单词的特征向量是二维的，也就是输入层的维度是二维，且隐藏层也假设是二维，输出也假设是二维，所有权重的值都为1且没有偏置且所有激活函数都是线性函数$f(x)=x$。现在输入一个序列到该模型中，我们来一步步求解出输出序列：<br>&emsp;&emsp;<strong>输入向量</strong>：</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{l}
+1 \\
+1
+\end{array}\right]\left[\begin{array}{l}
+1 \\
+1
+\end{array}\right]\left[\begin{array}{l}
+2 \\
+2
+\end{array}\right] \ldots \ldots</script><div align="center">
+<img src="/2020/10/09/rnn/2.png">
+</div>
+
+<p>&emsp;&emsp;你可能会好奇W去哪了？W在实际的计算中，在图像中表示非常困难 ，所以我们可以想象上一时刻的隐藏层的值是被存起来，等下一时刻的隐藏层进来时，上一时刻的隐藏层的值通过与权重相乘，两者相加便得到了下一时刻真正的隐藏层，可以看做每一时刻存下来的值。当然初始时 , 是没有存值的，因此初始值为0</p>
+<div align="center">
+<img src="/2020/10/09/rnn/3.png">
+</div>
+
+<p>&emsp;&emsp;当我们输入第一个嵌入向量[1,1]，如下图，其中隐藏层的值，也就是绿色神经元，是通过公式 $S_t = f(U<em>X_t+W</em>S_{t-1})$ 计算得到的，因为所有权重都是1，所以也就是 $1<em>1+1</em>1+1<em>0+1</em>0=2$。输出层的值$4$是通过公式$O_t=g(V<em>S_t)$计算得到的，也就是 $2</em>1+2*1=4$，得到输出向量[4,4]。</p>
+<div align="center">
+<img src="/2020/10/09/rnn/4.jpg">
+</div>
+
+<p>&emsp;&emsp;当[1,1]输入过后，我们的记忆里的 $w_1,w_2$ 已经不是0了，而是把这一时刻的隐藏状态放在里面，即变成了2，如图，输入下一个向量[1,1]，隐藏层的值通过公式$S_t = f(U<em>X_t+W</em>S_{t-1})$得到，$1<em>1+1</em>1+1<em>2+1</em>2=6$ ，输出层的值通过公式$O_t=g(V<em>S_t)$，得到 $6</em>1+6*1=12$ ，最终得到输出向量[12,12]：</p>
+<div align="center">
+<img src="/2020/10/09/rnn/5.jpg">
+</div>
+
+<p>&emsp;&emsp;同理，该时刻过后 $w_1,w_2$  的值变成了6，也就是输入第二个[1,1]过后所存下来的值，同理，输入第三个向量[2,2]，如图，细节过程不再描述，得到输出向量[32,32]：</p>
+<div align="center">
+<img src="/2020/10/09/rnn/6.jpg">
+</div>
+
+<p>&emsp;&emsp;由此，我们得到了最终的输出序列为：</p>
+<script type="math/tex; mode=display">
+\text { output sequence: }\left[\begin{array}{l}
+4 \\
+4
+\end{array}\right]\left[\begin{array}{l}
+12 \\
+12
+\end{array}\right]\left[\begin{array}{l}
+32 \\
+32
+\end{array}\right]</script><p>&emsp;&emsp;至此，一个完整的RNN结构我们已经计算了一遍，我们注意到，每一时刻的输出结果都与上一时刻的输入有着非常大的关系，如果我们将输入序列换个顺序，那么我们得到的结果也将是截然不同，这就是RNN的特性，<strong>可以处理序列数据，同时对序列也很敏感</strong>。</p>
+<h3 id="长短时记忆"><a href="#长短时记忆" class="headerlink" title="长短时记忆"></a>长短时记忆</h3><p>&emsp;&emsp;首先大概介绍一下LSTM，是四个单词的缩写，Long short-term memory，翻译过来就是长短期记忆，是RNN的一种，比普通RNN高级（上面讲的那种），基本一般情况下说使用RNN都是使用LSTM，现在很少有人使用上面讲的那个最基础版的RNN，因为那个存在一些问题，导致随着网络的深度加深，出现了梯度消失与梯度爆炸的问题，LSTM通过它的“门控装置”有效的缓解了这个问题，这也就是为什么我们现在都在使用LSTM而非普通RNN。<br>&emsp;&emsp;既然前面已经说了，LSTM是RNN的一种变体，更高级的RNN，那么它的本质还是一样的，还记得RNN的特点吗，可以有效的处理序列数据，当然LSTM也可以。它在每个时刻都会把隐藏层的值存下来，到下一时刻的时候再拿出来用，这样就保证了，每一时刻含有上一时刻的信息，如图，我们把存每一时刻信息的地方叫做Memory Cell，中文就是记忆细胞，可以这么理解。</p>
+<div align="center">
+<img src="/2020/10/09/rnn/7.png">
+</div>
+
+<p>&emsp;&emsp;打个比喻吧，普通RNN就像一个乞丐，路边捡的，别人丢的，什么东西他都想要，什么东西他都不嫌弃，LSTM就像一个贵族，没有身份的东西他不要，他会精心挑选符合自己身份的物品。这是为什么呢？有没有思考过，原因很简单，乞丐没有选择权，他的能力注定他只能当一个乞丐，因此他没有挑选的权利，而贵族不一样，贵族能力比较强，经过自己的打拼，终于有了地位和身份，所以可以选择舍弃一些低档的东西，这也是能力的凸显。LSTM和普通RNN正是贵族和乞丐，RNN什么信息它都存下来，因为它没有挑选的能力，而LSTM不一样，它会选择性的存储信息，因为它能力强，它有门控装置，它可以尽情的选择。<br>&emsp;&emsp;普通RNN只有中间的Memory Cell用来存所有的信息，而从下图我们可以看到，LSTM多了三个Gate，也就是三个门，什么意思呢？在现实生活中，门就是用来控制进出的，门关上了，你就进不去房子了，门打开你就能进去，同理，这里的门是用来控制每一时刻信息记忆与遗忘的。</p>
+<div align="center">
+<img src="/2020/10/09/rnn/8.jpg">
+</div>
+
+<p>依次来解释一下这三个门：</p>
+<ol>
+<li>Input Gate：中文是输入门，在每一时刻从输入层输入的信息会首先经过输入门，输入门的开关会决定这一时刻是否会有信息输入到Memory Cell。</li>
+<li>Output Gate：中文是输出门，每一时刻是否有信息从Memory Cell输出取决于这一道门。</li>
+<li>Forget Gate：中文是遗忘门，每一时刻Memory Cell里的值都会经历一个是否被遗忘的过程，就是由该门控制的，如果打卡，那么将会把Memory Cell里的值清除，也就是遗忘掉。</li>
+</ol>
+<p>&emsp;&emsp;按照上图的顺序，信息在传递的顺序，是这样的：<strong>先经过输入门，看是否有信息输入，再判断遗忘门是否选择遗忘Memory Cell里的信息，最后再经过输出门，判断是否将这一时刻的信息进行输出</strong>。其结构大致如图所示：</p>
+<div align="center">
+<img src="/2020/10/09/rnn/9.jpg">
+</div>
+
+<p>&emsp;&emsp;我们类比着来学习，首先看图中最中间的地方，Cell，我们上面也讲到了memory cell，也就是一个记忆存储的地方，这里就类似于普通RNN的$S_t$，都是用来存储信息的，这里面的信息都会保存到下一时刻，其实标准的叫法应该是$h_t$，因为这里对应神经网络里的隐藏层，所以是hidden的缩写，无论普通RNN还是LSTM其实t时刻的记忆细胞里存的信息，都应该被称为$h_t$。再看最上面的$a$，是这一时刻的输出，也就是类似于普通RNN里的$O_t$。最后，我们再来看这四个$Z,Z_i,Z_f,Z_o$，这四个相辅相成，才造就了中间的Memory Cell里的值，而对于LSTM的输入，这四个$Z,Z_i,Z_f,Z_o$都有输入向量$X_t$的参与。</p>
+<script type="math/tex; mode=display">
+\begin{gathered}
+Z=\tanh \left(W\left[x_{t}, h_{t-1}\right]\right) \\
+Z_{i}=\sigma\left(W_{i}\left[x_{t}, h_{t-1}\right]\right) \\
+Z_{f}=\sigma\left(W_{f}\left[x_{t}, h_{t-1}\right]\right) \\
+Z_{o}=\sigma\left(W_{o}\left[x_{t}, h_{t-1}\right]\right)
+\end{gathered}</script><p>&emsp;&emsp;其中$Z$是最为普通的输入，可以从上图中看到,$Z$是通过该时刻的输入 $X_t$和上一时刻存在memory cell里的隐藏层信息$h_{t-1}$向量拼接，再与权重参数向量$W$点积，得到的值经过激活函数tanh最终会得到一个数值，也就是$Z$，注意只有$Z$的激活函数是tanh，因为$Z$是真正作为输入的，其他三个都是门控装置。再来看$Z_i$，input gate的缩写i，所以也就是输入门的门控装置，$Z_i$同样也是通过该时刻的输入$X_t$和上一时刻隐藏状态，也就是上一时刻存下来的信息$h_{t-1}$向量拼接，在与权重参数向量$W_i$点积（注意每个门的权重向量都不一样，这里的下标i代表input的意思，也就是输入门）。得到的值经过激活函数sigmoid的最终会得到一个0-1之间的一个数值，用来作为输入门的控制信号。以此类推，就不详细讲解$Z_f,Z_o$了，分别是缩写forget和output的门控装置，原理与上述输入门的门控装置类似。</p>
+<h3 id="门控循环单元"><a href="#门控循环单元" class="headerlink" title="门控循环单元"></a>门控循环单元</h3><p>GRU是LSTM的一种简单的变体，比LSTM网络的结构更加简单，而且效果也不差，运行效率更高，因此也是当前流行的一种网络结构。</p>
+<h2 id="示例代码实现"><a href="#示例代码实现" class="headerlink" title="示例代码实现"></a>示例代码实现</h2><h3 id="简单神经网络"><a href="#简单神经网络" class="headerlink" title="简单神经网络"></a>简单神经网络</h3><h3 id="长短时记忆-1"><a href="#长短时记忆-1" class="headerlink" title="长短时记忆"></a>长短时记忆</h3><h3 id="门控循环单元-1"><a href="#门控循环单元-1" class="headerlink" title="门控循环单元"></a>门控循环单元</h3>]]></content>
       <categories>
         <category>机器学习</category>
       </categories>
@@ -925,8 +1027,8 @@ J_{\text {新 }}(w)=J_{\text {旧 }}(w)+\alpha \Omega(h)</script><p>&emsp;&emsp;
         <category>机器学习</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>机器学习</tag>
+        <tag>笔记</tag>
         <tag>优化算法</tag>
       </tags>
   </entry>

@@ -20,20 +20,30 @@
     var CONFIG = {"hostname":"cleverbobo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":"ture","show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="不定期更新~">
+  <meta name="description" content="应用场景&amp;emsp;&amp;emsp;在自然语言处理的场景下，顺序关系至关重要，比如“我请你吃饭”与“你请我吃饭”，这两句话虽然构成的单词相同，但是其表达的意义却是截然相反。目前较为火热的卷积神经网络（CNN）主要处理图片中像素值之间的空间关系，不能捕获输入的时序信息,而循环神经网络（RNN）对具有序列特性的数据非常有效，它能挖掘数据中的时序信息以及语义信息，利用了RNN的这种能力，使深度学习模型在解决">
 <meta property="og:type" content="article">
-<meta property="og:title" content="循环神经网络(暂时断更)">
+<meta property="og:title" content="循环神经网络">
 <meta property="og:url" content="http://cleverbobo.github.io/2020/10/09/rnn/index.html">
 <meta property="og:site_name" content="米奇妙妙屋">
-<meta property="og:description" content="不定期更新~">
+<meta property="og:description" content="应用场景&amp;emsp;&amp;emsp;在自然语言处理的场景下，顺序关系至关重要，比如“我请你吃饭”与“你请我吃饭”，这两句话虽然构成的单词相同，但是其表达的意义却是截然相反。目前较为火热的卷积神经网络（CNN）主要处理图片中像素值之间的空间关系，不能捕获输入的时序信息,而循环神经网络（RNN）对具有序列特性的数据非常有效，它能挖掘数据中的时序信息以及语义信息，利用了RNN的这种能力，使深度学习模型在解决">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/1.png#pic_center">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/2.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/3.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/4.jpg">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/5.jpg">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/6.jpg">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/7.png">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/8.jpg">
+<meta property="og:image" content="http://cleverbobo.github.io/2020/10/09/rnn/9.jpg">
 <meta property="article:published_time" content="2020-10-09T15:11:26.000Z">
-<meta property="article:modified_time" content="2020-10-09T15:12:47.513Z">
+<meta property="article:modified_time" content="2022-01-03T09:14:13.514Z">
 <meta property="article:author" content="clever_bobo">
 <meta property="article:tag" content="机器学习">
 <meta property="article:tag" content="入门">
 <meta property="article:tag" content="课程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://cleverbobo.github.io/2020/10/09/rnn/1.png#pic_center">
 
 <link rel="canonical" href="http://cleverbobo.github.io/2020/10/09/rnn/">
 
@@ -48,7 +58,7 @@
   };
 </script>
 
-  <title>循环神经网络(暂时断更) | 米奇妙妙屋</title>
+  <title>循环神经网络 | 米奇妙妙屋</title>
   
 
 
@@ -144,11 +154,6 @@
     <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
 
   </li>
-        <li class="menu-item menu-item-schedule">
-
-    <a href="/schedule/" rel="section"><i class="fa fa-calendar fa-fw"></i>机电硕20-5相关通知</a>
-
-  </li>
         <li class="menu-item menu-item-music">
 
     <a href="/music/" rel="section"><i class="fa fa-music fa-fw"></i>吉他曲</a>
@@ -222,7 +227,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          循环神经网络(暂时断更)
+          循环神经网络
         </h1>
 
         <div class="post-meta">
@@ -231,10 +236,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-09 23:11:26 / 修改时间：23:12:47" itemprop="dateCreated datePublished" datetime="2020-10-09T23:11:26+08:00">2020-10-09</time>
+              <time title="创建时间：2020-10-09 23:11:26" itemprop="dateCreated datePublished" datetime="2020-10-09T23:11:26+08:00">2020-10-09</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-01-03 17:14:13" itemprop="dateModified" datetime="2022-01-03T17:14:13+08:00">2022-01-03</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -246,7 +257,7 @@
             </span>
 
           
-            <span id="/2020/10/09/rnn/" class="post-meta-item leancloud_visitors" data-flag-title="循环神经网络(暂时断更)" title="阅读次数">
+            <span id="/2020/10/09/rnn/" class="post-meta-item leancloud_visitors" data-flag-title="循环神经网络" title="阅读次数">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -277,8 +288,94 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>不定期更新~</p>
+        <h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>&emsp;&emsp;在自然语言处理的场景下，<strong>顺序关系</strong>至关重要，比如“我请你吃饭”与“你请我吃饭”，这两句话虽然构成的单词相同，但是其表达的意义却是截然相反。目前较为火热的卷积神经网络（CNN）主要处理图片中像素值之间的空间关系，不能捕获输入的时序信息,而循环神经网络（RNN）对具有<strong>序列特性</strong>的数据非常有效，它能挖掘数据中的<strong>时序信息</strong>以及<strong>语义信息</strong>，利用了RNN的这种能力，使深度学习模型在解决语音识别、语言模型、机器翻译以及时序分析等NLP领域的问题时有所突破。</p>
+<p>&emsp;&emsp;举个简单的例子<br>&emsp;&emsp;第一句话：I like eating apple！（我喜欢吃苹果！）<br>&emsp;&emsp;第二句话：The Apple is a great company！（苹果是一家很棒的公司！）</p>
+<p>&emsp;&emsp;现在的任务是要给apple打Label，我们都知道第一个apple是一种水果，第二个apple是苹果公司，假设我们现在有大量的已经标记好的数据以供训练模型，当我们使用全连接的神经网络时，我们做法是把apple这个单词的特征向量输入到我们的模型中，在输出结果时，让我们的label里，正确的label概率最大，来训练模型，但我们的语料库中，有的apple的label是水果，有的label是公司，这将导致模型在训练的过程中，预测的准确程度取决于<strong>训练集中哪个label多一些</strong>，这样的模型对于我们来说完全没有作用。问题就出在了<strong>我们没有结合上下文去训练模型</strong>，而是单独的在训练apple这个单词的label，这也是全连接神经网络模型所不能做到的，于是就有了我们的循环神经网络。</p>
+<a id="more"></a>
+<h2 id="原理架构"><a href="#原理架构" class="headerlink" title="原理架构"></a>原理架构</h2><p><img src="/2020/10/09/rnn/1.png#pic_center" alt="图一"><br>&emsp;&emsp;如图所示，为循环神经网络的基础架构，$x_t$代表t时刻的输入（例如单词的嵌入向量）；$W$代表隐藏层的权重矩阵，该矩阵会随着输入不断更新，以便记录历史信息；$O_t$代表t时刻的输出。<br>&emsp;&emsp;RNN之所以可以解决序列问题，是因为它可以记住每一时刻的信息，<strong>每一时刻的隐藏层不仅由该时刻的输入层决定，还由上一时刻的隐藏层决定</strong>，公式如下：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+&O_{t}=g\left(V \cdot S_{t}\right) \\
+&S_{t}=f\left(U \cdot X_{t}+W \cdot S_{t-1}\right)
+\end{aligned}</script><p>&emsp;&emsp;其中 ，$O_t$ 代表t时刻的输出；$S_t$代表t时刻的隐藏层的值,$S_t$的值不仅仅取决于$X_t$, 还取决于$S_{t-1}$；$g$、$f$对应不同的映射函数。值得注意的一点是，在整个训练过程中，每一时刻所用的都是同样的W,只不过W在<strong>不断的更新</strong></p>
+<h2 id="常见模型"><a href="#常见模型" class="headerlink" title="常见模型"></a>常见模型</h2><h3 id="基础RNN架构"><a href="#基础RNN架构" class="headerlink" title="基础RNN架构"></a>基础RNN架构</h3><p>&emsp;&emsp;在这里简单举一个例子方便理解：假设存在一个RNN，如下图所示，输入的每个单词的特征向量是二维的，也就是输入层的维度是二维，且隐藏层也假设是二维，输出也假设是二维，所有权重的值都为1且没有偏置且所有激活函数都是线性函数$f(x)=x$。现在输入一个序列到该模型中，我们来一步步求解出输出序列：<br>&emsp;&emsp;<strong>输入向量</strong>：</p>
+<script type="math/tex; mode=display">
+\left[\begin{array}{l}
+1 \\
+1
+\end{array}\right]\left[\begin{array}{l}
+1 \\
+1
+\end{array}\right]\left[\begin{array}{l}
+2 \\
+2
+\end{array}\right] \ldots \ldots</script><div align="center">
+<img src="/2020/10/09/rnn/2.png">
+</div>
 
+<p>&emsp;&emsp;你可能会好奇W去哪了？W在实际的计算中，在图像中表示非常困难 ，所以我们可以想象上一时刻的隐藏层的值是被存起来，等下一时刻的隐藏层进来时，上一时刻的隐藏层的值通过与权重相乘，两者相加便得到了下一时刻真正的隐藏层，可以看做每一时刻存下来的值。当然初始时 , 是没有存值的，因此初始值为0</p>
+<div align="center">
+<img src="/2020/10/09/rnn/3.png">
+</div>
+
+<p>&emsp;&emsp;当我们输入第一个嵌入向量[1,1]，如下图，其中隐藏层的值，也就是绿色神经元，是通过公式 $S_t = f(U<em>X_t+W</em>S_{t-1})$ 计算得到的，因为所有权重都是1，所以也就是 $1<em>1+1</em>1+1<em>0+1</em>0=2$。输出层的值$4$是通过公式$O_t=g(V<em>S_t)$计算得到的，也就是 $2</em>1+2*1=4$，得到输出向量[4,4]。</p>
+<div align="center">
+<img src="/2020/10/09/rnn/4.jpg">
+</div>
+
+<p>&emsp;&emsp;当[1,1]输入过后，我们的记忆里的 $w_1,w_2$ 已经不是0了，而是把这一时刻的隐藏状态放在里面，即变成了2，如图，输入下一个向量[1,1]，隐藏层的值通过公式$S_t = f(U<em>X_t+W</em>S_{t-1})$得到，$1<em>1+1</em>1+1<em>2+1</em>2=6$ ，输出层的值通过公式$O_t=g(V<em>S_t)$，得到 $6</em>1+6*1=12$ ，最终得到输出向量[12,12]：</p>
+<div align="center">
+<img src="/2020/10/09/rnn/5.jpg">
+</div>
+
+<p>&emsp;&emsp;同理，该时刻过后 $w_1,w_2$  的值变成了6，也就是输入第二个[1,1]过后所存下来的值，同理，输入第三个向量[2,2]，如图，细节过程不再描述，得到输出向量[32,32]：</p>
+<div align="center">
+<img src="/2020/10/09/rnn/6.jpg">
+</div>
+
+<p>&emsp;&emsp;由此，我们得到了最终的输出序列为：</p>
+<script type="math/tex; mode=display">
+\text { output sequence: }\left[\begin{array}{l}
+4 \\
+4
+\end{array}\right]\left[\begin{array}{l}
+12 \\
+12
+\end{array}\right]\left[\begin{array}{l}
+32 \\
+32
+\end{array}\right]</script><p>&emsp;&emsp;至此，一个完整的RNN结构我们已经计算了一遍，我们注意到，每一时刻的输出结果都与上一时刻的输入有着非常大的关系，如果我们将输入序列换个顺序，那么我们得到的结果也将是截然不同，这就是RNN的特性，<strong>可以处理序列数据，同时对序列也很敏感</strong>。</p>
+<h3 id="长短时记忆"><a href="#长短时记忆" class="headerlink" title="长短时记忆"></a>长短时记忆</h3><p>&emsp;&emsp;首先大概介绍一下LSTM，是四个单词的缩写，Long short-term memory，翻译过来就是长短期记忆，是RNN的一种，比普通RNN高级（上面讲的那种），基本一般情况下说使用RNN都是使用LSTM，现在很少有人使用上面讲的那个最基础版的RNN，因为那个存在一些问题，导致随着网络的深度加深，出现了梯度消失与梯度爆炸的问题，LSTM通过它的“门控装置”有效的缓解了这个问题，这也就是为什么我们现在都在使用LSTM而非普通RNN。<br>&emsp;&emsp;既然前面已经说了，LSTM是RNN的一种变体，更高级的RNN，那么它的本质还是一样的，还记得RNN的特点吗，可以有效的处理序列数据，当然LSTM也可以。它在每个时刻都会把隐藏层的值存下来，到下一时刻的时候再拿出来用，这样就保证了，每一时刻含有上一时刻的信息，如图，我们把存每一时刻信息的地方叫做Memory Cell，中文就是记忆细胞，可以这么理解。</p>
+<div align="center">
+<img src="/2020/10/09/rnn/7.png">
+</div>
+
+<p>&emsp;&emsp;打个比喻吧，普通RNN就像一个乞丐，路边捡的，别人丢的，什么东西他都想要，什么东西他都不嫌弃，LSTM就像一个贵族，没有身份的东西他不要，他会精心挑选符合自己身份的物品。这是为什么呢？有没有思考过，原因很简单，乞丐没有选择权，他的能力注定他只能当一个乞丐，因此他没有挑选的权利，而贵族不一样，贵族能力比较强，经过自己的打拼，终于有了地位和身份，所以可以选择舍弃一些低档的东西，这也是能力的凸显。LSTM和普通RNN正是贵族和乞丐，RNN什么信息它都存下来，因为它没有挑选的能力，而LSTM不一样，它会选择性的存储信息，因为它能力强，它有门控装置，它可以尽情的选择。<br>&emsp;&emsp;普通RNN只有中间的Memory Cell用来存所有的信息，而从下图我们可以看到，LSTM多了三个Gate，也就是三个门，什么意思呢？在现实生活中，门就是用来控制进出的，门关上了，你就进不去房子了，门打开你就能进去，同理，这里的门是用来控制每一时刻信息记忆与遗忘的。</p>
+<div align="center">
+<img src="/2020/10/09/rnn/8.jpg">
+</div>
+
+<p>依次来解释一下这三个门：</p>
+<ol>
+<li>Input Gate：中文是输入门，在每一时刻从输入层输入的信息会首先经过输入门，输入门的开关会决定这一时刻是否会有信息输入到Memory Cell。</li>
+<li>Output Gate：中文是输出门，每一时刻是否有信息从Memory Cell输出取决于这一道门。</li>
+<li>Forget Gate：中文是遗忘门，每一时刻Memory Cell里的值都会经历一个是否被遗忘的过程，就是由该门控制的，如果打卡，那么将会把Memory Cell里的值清除，也就是遗忘掉。</li>
+</ol>
+<p>&emsp;&emsp;按照上图的顺序，信息在传递的顺序，是这样的：<strong>先经过输入门，看是否有信息输入，再判断遗忘门是否选择遗忘Memory Cell里的信息，最后再经过输出门，判断是否将这一时刻的信息进行输出</strong>。其结构大致如图所示：</p>
+<div align="center">
+<img src="/2020/10/09/rnn/9.jpg">
+</div>
+
+<p>&emsp;&emsp;我们类比着来学习，首先看图中最中间的地方，Cell，我们上面也讲到了memory cell，也就是一个记忆存储的地方，这里就类似于普通RNN的$S_t$，都是用来存储信息的，这里面的信息都会保存到下一时刻，其实标准的叫法应该是$h_t$，因为这里对应神经网络里的隐藏层，所以是hidden的缩写，无论普通RNN还是LSTM其实t时刻的记忆细胞里存的信息，都应该被称为$h_t$。再看最上面的$a$，是这一时刻的输出，也就是类似于普通RNN里的$O_t$。最后，我们再来看这四个$Z,Z_i,Z_f,Z_o$，这四个相辅相成，才造就了中间的Memory Cell里的值，而对于LSTM的输入，这四个$Z,Z_i,Z_f,Z_o$都有输入向量$X_t$的参与。</p>
+<script type="math/tex; mode=display">
+\begin{gathered}
+Z=\tanh \left(W\left[x_{t}, h_{t-1}\right]\right) \\
+Z_{i}=\sigma\left(W_{i}\left[x_{t}, h_{t-1}\right]\right) \\
+Z_{f}=\sigma\left(W_{f}\left[x_{t}, h_{t-1}\right]\right) \\
+Z_{o}=\sigma\left(W_{o}\left[x_{t}, h_{t-1}\right]\right)
+\end{gathered}</script><p>&emsp;&emsp;其中$Z$是最为普通的输入，可以从上图中看到,$Z$是通过该时刻的输入 $X_t$和上一时刻存在memory cell里的隐藏层信息$h_{t-1}$向量拼接，再与权重参数向量$W$点积，得到的值经过激活函数tanh最终会得到一个数值，也就是$Z$，注意只有$Z$的激活函数是tanh，因为$Z$是真正作为输入的，其他三个都是门控装置。再来看$Z_i$，input gate的缩写i，所以也就是输入门的门控装置，$Z_i$同样也是通过该时刻的输入$X_t$和上一时刻隐藏状态，也就是上一时刻存下来的信息$h_{t-1}$向量拼接，在与权重参数向量$W_i$点积（注意每个门的权重向量都不一样，这里的下标i代表input的意思，也就是输入门）。得到的值经过激活函数sigmoid的最终会得到一个0-1之间的一个数值，用来作为输入门的控制信号。以此类推，就不详细讲解$Z_f,Z_o$了，分别是缩写forget和output的门控装置，原理与上述输入门的门控装置类似。</p>
+<h3 id="门控循环单元"><a href="#门控循环单元" class="headerlink" title="门控循环单元"></a>门控循环单元</h3><p>GRU是LSTM的一种简单的变体，比LSTM网络的结构更加简单，而且效果也不差，运行效率更高，因此也是当前流行的一种网络结构。</p>
+<h2 id="示例代码实现"><a href="#示例代码实现" class="headerlink" title="示例代码实现"></a>示例代码实现</h2><h3 id="简单神经网络"><a href="#简单神经网络" class="headerlink" title="简单神经网络"></a>简单神经网络</h3><h3 id="长短时记忆-1"><a href="#长短时记忆-1" class="headerlink" title="长短时记忆"></a>长短时记忆</h3><h3 id="门控循环单元-1"><a href="#门控循环单元-1" class="headerlink" title="门控循环单元"></a>门控循环单元</h3>
     </div>
 
     
@@ -313,7 +410,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://cleverbobo.github.io/2020/10/09/rnn/" title="循环神经网络(暂时断更)">http://cleverbobo.github.io/2020/10/09/rnn/</a>
+    <a href="http://cleverbobo.github.io/2020/10/09/rnn/" title="循环神经网络">http://cleverbobo.github.io/2020/10/09/rnn/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -339,8 +436,8 @@
       <i class="fa fa-chevron-left"></i> 通俗理解Seq2Seq模型+Attention机制(待修正)
     </a></div>
       <div class="post-nav-item">
-    <a href="/2020/10/09/lstm/" rel="next" title="长短期记忆(待更新)">
-      长短期记忆(待更新) <i class="fa fa-chevron-right"></i>
+    <a href="/2020/10/09/autodecoder/" rel="next" title="自编码器(待更新)">
+      自编码器(待更新) <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -401,6 +498,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">应用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8E%9F%E7%90%86%E6%9E%B6%E6%9E%84"><span class="nav-number">2.</span> <span class="nav-text">原理架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%A8%A1%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">常见模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80RNN%E6%9E%B6%E6%9E%84"><span class="nav-number">3.1.</span> <span class="nav-text">基础RNN架构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E7%9F%AD%E6%97%B6%E8%AE%B0%E5%BF%86"><span class="nav-number">3.2.</span> <span class="nav-text">长短时记忆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%A8%E6%8E%A7%E5%BE%AA%E7%8E%AF%E5%8D%95%E5%85%83"><span class="nav-number">3.3.</span> <span class="nav-text">门控循环单元</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">4.</span> <span class="nav-text">示例代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="nav-number">4.1.</span> <span class="nav-text">简单神经网络</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E7%9F%AD%E6%97%B6%E8%AE%B0%E5%BF%86-1"><span class="nav-number">4.2.</span> <span class="nav-text">长短时记忆</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%A8%E6%8E%A7%E5%BE%AA%E7%8E%AF%E5%8D%95%E5%85%83-1"><span class="nav-number">4.3.</span> <span class="nav-text">门控循环单元</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -416,7 +514,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -450,7 +548,7 @@
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://www.mereith.com/" title="https:&#x2F;&#x2F;www.mereith.com&#x2F;" rel="noopener" target="_blank">1.王璐</a>
+          <a href="https://www.mereith.com/" title="https:&#x2F;&#x2F;www.mereith.com&#x2F;" rel="noopener" target="_blank">1.前端大能的blog</a>
         </li>
         <li class="links-of-blogroll-item">
           <a href="https://keras-cn.readthedocs.io/en/latest/" title="https:&#x2F;&#x2F;keras-cn.readthedocs.io&#x2F;en&#x2F;latest&#x2F;" rel="noopener" target="_blank">2.keras中文文档</a>
@@ -477,7 +575,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
